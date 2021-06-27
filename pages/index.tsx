@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 
 import Search from '../components/search'
+import Card from '../components/card'
 
 export default function Home() {
   return (  
@@ -17,7 +18,10 @@ export default function Home() {
       </Head>
       <Search/>
       <main className={styles.main}>
-        aaa
+        <Card />
+        <Card />
+        <Card />
+        <Card />
       </main>
 
       <footer className={styles.footer}>

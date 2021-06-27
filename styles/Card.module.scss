@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    border: 1px solid #000;
+}
+$inactive-bgc: #666;
+$active-bgc: #000;
+
+.title {
+    width: 100%;
+    background-color: $active-bgc;
+    display: flex;
+    justify-content: space-around;
+    color: #fff;
+}
+
+.title div {
+    width: 90%;
+}
+
+.window {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #eee;
+    color: #222;
+    padding: 1rem;
+}
+
+.window .item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 95%;
+}
+
+.window hr {
+    width: 80%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.item label {
+    width: 30%;
+    font-size: 1.1rem;
+}
+.item div {
+    width: 70%;
+    padding-left: 1rem;
+    background-color: #ddd;
+}

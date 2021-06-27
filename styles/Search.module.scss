@@ -1,10 +1,11 @@
 .container {
     z-index: 999;
     position: fixed;
-    top: 100px;
-    right: 2rem;
+    top: 85px;
+    right: 1rem;
     width: 40%;
-    opacity: 0.8;
+    opacity: 0.1;
+    border: 1px solid #fff;
 }
 $inactive-bgc: #666;
 $active-bgc: #000;
@@ -34,6 +35,9 @@ $active-bgc: #000;
     justify-content: flex-end;
     width: 50%;
     background-color: $active-bgc;
+}
+
+.control button {
 }
 
 //window
