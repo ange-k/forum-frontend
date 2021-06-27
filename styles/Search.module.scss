@@ -1,0 +1,65 @@
+.container {
+    z-index: 999;
+    position: fixed;
+    top: 100px;
+    right: 2rem;
+    width: 40%;
+    opacity: 0.8;
+}
+$inactive-bgc: #666;
+$active-bgc: #000;
+
+.tab {
+    display: flex;
+    justify-content: flex-start;
+    background-color: $inactive-bgc;
+    color: #fff;
+    padding: 0;
+    margin: 0;
+}
+.tab li {
+    display: block;
+    background-color: $inactive-bgc;
+    padding:0.1rem 0;
+    width: 25%;
+    text-align: center;
+    border-right: 1px solid $active-bgc;
+}
+.menu.active {
+    background-color: $active-bgc;
+}
+
+.control {
+    display: flex;
+    justify-content: flex-end;
+    width: 50%;
+    background-color: $active-bgc;
+}
+
+//window
+
+.window {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: $active-bgc;
+    color: #fff;
+    padding: 1rem 0;
+}
+.window .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    padding-left: 2rem;
+}
+
+.window hr {
+    width: 80%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.window span {
+    padding-left: 1rem;
+}
