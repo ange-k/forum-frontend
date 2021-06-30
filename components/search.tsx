@@ -13,11 +13,15 @@ export default function Search() {
         setWindowActive(false)
     }
     /**
+     * windowVisible=falseのとき、引数のclassNameに.invisibleを追加して返す
      * windowActiveStatus=trueのとき、引数のclassNameに.activeを追加して返す
      * @param className
      * @returns className + .active
      */
     const setActiveStatus = (className: string) => {
+        if(windowVisble === false) {
+            return `${className} ${styles.invisible}`
+        }
         if(windowActive === false) {
             return className;
         }
@@ -26,6 +30,10 @@ export default function Search() {
 
     // サーチウィンドウの表示状態
     const [windowVisble, setWindowVisible] = useState(true)
+    const clickViewBtn = (event:React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setWindowVisible(!windowVisble);
+    }
 
     // サーチ, ポストのトグルスイッチ管理
     const [selectSearchTab, setSelectSearchTab] = useState(true)
@@ -45,12 +53,17 @@ export default function Search() {
     type TabName = typeof TabName[keyof typeof TabName];
 
     /**
+     * windowVisible=falseのとき、引数のclassNameに.invisibleを追加して返す
      * selectSearchTabの値を見て、selectクラスの付与をトグルする
      * windowActiveの値を見て、activeクラスの付与をトグルする
      * @param className 
      * @returns 
      */
     const setTabClassName = (tabName:TabName, className: string) => {
+        if(windowVisble === false) {
+            return `${className} ${styles.invisible}`
+        }
+
         let name = ''
         if(windowActive === true) {
             name = styles.active
@@ -70,7 +83,7 @@ export default function Search() {
     }
 
     return (
-        <div className={styles.container}
+        <div className={windowVisble ? `${styles.container}` : `${styles.container} ${styles.invisible}`}
             onMouseEnter={overMouse}
             onMouseLeave={leaveMouse}
         >
@@ -82,7 +95,9 @@ export default function Search() {
                     onClick={clickPost}
                 >post</li>
                 <div className={styles.control}>
-                    <button>-</button>
+                    <button onClick={clickViewBtn}>
+                        {windowVisble ? '+' : '-'}
+                    </button>
                 </div>
             </ul>
             <div className={setActiveStatus(styles.window)}>

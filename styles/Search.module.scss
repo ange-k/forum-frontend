@@ -6,6 +6,9 @@
     width: 40%;
     border: 1px solid #fff;
 }
+.container.invisible {
+    border: inherit;
+}
 $inactive-bgc: #666;
 $active-bgc: #000;
 
@@ -19,6 +22,9 @@ $active-bgc: #000;
 }
 .tab.active {
     background: rgba(0, 0, 0, 1.0);
+}
+.container .tab.invisible {
+    background: rgba(0, 0, 0, 0);
 }
 
 .menu {
@@ -39,6 +45,9 @@ $active-bgc: #000;
 .menu.active {
     opacity: 1.0;
 }
+.tab .menu.invisible {
+    opacity: 0;
+}
 
 .control {
     display: flex;
@@ -48,6 +57,9 @@ $active-bgc: #000;
 }
 .control.active {
     background: rgba(0, 0, 0, 1.0);
+}
+.tab .control.invisible {
+    background: rgba(0, 0, 0, 0);
 }
 
 //window
@@ -63,6 +75,9 @@ $active-bgc: #000;
 }
 .window.active {
     opacity: 1.0;
+}
+.container .window.invisible {
+    opacity: 0;
 }
 .window .item {
     display: flex;
