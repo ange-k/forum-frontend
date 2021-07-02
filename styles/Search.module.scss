@@ -53,13 +53,6 @@ $active-bgc: #000;
     display: flex;
     justify-content: flex-end;
     width: 50%;
-    background: rgba(0, 0, 0, 0.1); // 切り替え
-}
-.control.active {
-    background: rgba(0, 0, 0, 1.0);
-}
-.tab .control.invisible {
-    background: rgba(0, 0, 0, 0);
 }
 
 //window
