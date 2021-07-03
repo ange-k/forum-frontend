@@ -93,7 +93,7 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
                     }
                 </select>
             </div>
-            <hr/>
+            <hr className={styles.hr}/>
             <div className={styles.item}>
                 <label>タグ検索</label>
                 <select onChange={(e) => tagSelect(e.target.value)}>
@@ -116,7 +116,7 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
                 }
             </div>
             
-            <hr/>
+            <hr className={styles.hr}/>
             <span className={styles.label}>フリーワード検索</span>
             <div className={styles.item}>
                 <label>サーバ</label>
@@ -126,7 +126,7 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
                 <label>名前</label>
                 <input onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
             </div>
-            <hr/>
+            <hr className={styles.hr}/>
             <div className={styles.searchbtn}>
                 <button onClick={(e) => {
                     e.preventDefault;

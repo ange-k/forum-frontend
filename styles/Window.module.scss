@@ -8,6 +8,14 @@
     width: 40%;
     border: 1px solid #fff;
 }
+
+@media (max-width: 600px) {
+    .container {
+      width: 90%;
+    }
+}
+  
+
 .container.invisible {
     border: inherit;
 }

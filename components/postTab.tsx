@@ -110,7 +110,7 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
                     }
                 </select>
             </div>
-            <hr/>
+            <hr className={styles.hr}/>
             <div className={styles.item}>
                 <label>タグ選択</label>
                 <select disabled={disableTagSelect} onChange={(e) => tagSelect(e.target.value)}>
@@ -132,7 +132,7 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
                     ))
                 }
             </div>
-            <hr/>
+            <hr className={styles.hr}/>
             <div className={styles.item}>
                 <label>サーバ</label>
                 <input onChange={(e)=>setQuery({...query, server: e.target.value})}></input>
@@ -141,12 +141,12 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
                 <label>名前</label>
                 <input onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
             </div>
-            <hr/>
+            <hr className={styles.hr}/>
             <div className={styles.textarea}>
                 <textarea onChange={(e) => setQuery({...query, comment: e.target.value})}>
                 </textarea>
             </div>
-            <hr/>
+            <hr className={styles.hr}/>
             <div className={styles.postbtn}>
                 <button onClick={(e) => {
                     e.preventDefault;

@@ -43,3 +43,9 @@ $active-bgc: #000;
     padding-left: 2rem;
     margin-top: 1rem;
 }
+
+@media (max-width: 600px) {
+    .hr {
+        display: none;
+    }
+}

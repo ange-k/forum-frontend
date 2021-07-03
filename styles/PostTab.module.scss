@@ -12,6 +12,12 @@
     height: 250px;
 }
 
+@media (max-width: 600px) {
+    .textarea textarea {
+        height: 150px;
+    }
+}
+
 .postbtn {
     padding-right: 1rem;
     text-align: right;

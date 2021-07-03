@@ -4,6 +4,12 @@ body {
   margin: 0;
   font-family: 'Kosugi Maru', Helvetica Neue, sans-serif;
   background-color: #34495e;
+  min-width: 400px;
+}
+@media (max-width: 600px) {
+  body {
+    font-size: 0.9rem;
+  }
 }
 
 a {
