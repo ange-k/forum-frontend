@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import { dateFormat } from '../../helper/genHelper';
 import { exists } from './runtime';
 import {
     UserData,
@@ -121,6 +122,7 @@ export function PostFromJSONTyped(json: any, ignoreDiscriminator: boolean): Post
     if ((json === undefined) || (json === null)) {
         return json;
     }
+
     return {
         
         'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
@@ -132,7 +134,7 @@ export function PostFromJSONTyped(json: any, ignoreDiscriminator: boolean): Post
         'vcUse': json['vcUse'],
         'device': json['device'],
         'comment': json['comment'],
-        'createdAt': !exists(json, 'createdAt') ? undefined : (new Date(json['createdAt']).toISOString()),
+        'createdAt': !exists(json, 'createdAt') ? undefined : (dateFormat(new Date(json['createdAt']))),
         'userData': !exists(json, 'userData') ? undefined : UserDataFromJSON(json['userData']),
         'deleteKey': !exists(json, 'deleteKey') ? undefined : json['deleteKey'],
     };

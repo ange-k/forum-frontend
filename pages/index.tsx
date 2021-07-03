@@ -10,30 +10,42 @@ import { InferGetServerSidePropsType } from 'next'
 import { Post } from '../lib/gen/models/Post'
 import GameToPosts from '../lib/gen/models/GameToPosts'
 
+import React, { useState } from 'react';
+
 export const getServerSideProps = async () => {
   const games:Game[] = await getGames()
 
-  const posts:GameToPosts[] = await games.reduce<Promise<Array<GameToPosts>>>(async (resultPromise, game:Game) => {
+  const gameToPosts:GameToPosts[] = await games.reduce<Promise<Array<GameToPosts>>>(async (resultPromise, game:Game) => {
     const result = await resultPromise
     const post:Post[] = await findPosts(game.idName)
     result.push({
       key: game.idName,
-      posts: post
+      name: game.viewName,
+      posts: post.sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime())
     })
     return result
   }, Promise.resolve(new Array<GameToPosts>()))
-  console.log(  posts[0].posts[0].writeDay?.toString())
   return {
     props: {
       games,
-      posts
+      gameToPosts
     },
   }
 }
 
-export default function Home({ games, posts }:InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(games)
-  console.log(posts)
+export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [gamesOrigin] = useState(games)
+  const [gameToPostsOrigin] = useState(gameToPosts)
+
+  const init = (gameToPosts:GameToPosts[]) => gameToPosts.flatMap((gameToPost) => {
+    return {
+      key: gameToPost.key,
+      name: gameToPost.name,
+      posts: gameToPost.posts.slice(0, 20)
+    } as GameToPosts
+  }) // 各ポストデータの先頭20個ずつ
+  const [viewPosts, setViewPosts] = useState(init(gameToPosts))
+  console.log(viewPosts)
   return (  
     <div className={styles.container}>
       <Head>
@@ -46,10 +58,11 @@ export default function Home({ games, posts }:InferGetServerSidePropsType<typeof
       </Head>
       <Search/>
       <main className={styles.main}>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {viewPosts.map(gameToPost => (
+            gameToPost.posts.map(post => (
+              <Card key={post.uuid} gameName={gameToPost.name} post={post}/>
+            ))
+        ))}
       </main>
 
       <footer className={styles.footer}>

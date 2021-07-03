@@ -24,6 +24,7 @@ $active-bgc: #000;
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 100%;
     background-color: #eee;
     color: #222;
     padding: 1rem;
@@ -50,4 +51,15 @@ $active-bgc: #000;
     width: 70%;
     padding-left: 1rem;
     background-color: #ddd;
+}
+
+.textarea {
+    overflow-wrap: break-word;
+    background-color: #fefefe;
+    height: 100%;
+}
+
+.created {
+    font-size: 0.85rem;
+    text-align: right;
 }
