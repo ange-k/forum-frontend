@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Game } from '../lib/gen/models/Game';
-import { PostPurposeEnum, PostVcUseEnum } from '../lib/gen/models/Post';
-import { convertPropose, convertVcUse } from '../lib/helper/genHelper';
+import { PostPurposeEnum, PostTagsEnum, PostVcUseEnum } from '../lib/gen/models/Post';
+import { convertPropose, convertTags, convertVcUse } from '../lib/helper/genHelper';
 import styles from '../styles/Search.module.scss'
 
 type SearchProps = ({
@@ -29,10 +29,20 @@ const vcuses = () => {
     })
 }
 
+const tags = () => {
+    const enums = Object.entries(PostTagsEnum)
+    return enums.map((k, v) => {
+        return {
+            key: k[1],
+            value: convertTags(k[1])
+        }
+    })
+}
+
 export interface SearchQuery {
     gameId: string,
     vcUse: string,
-    tags?: string[],
+    tags: string[],
     purpose?: string,
     serverName?: string,
     playerName?: string,
@@ -43,7 +53,22 @@ const Search:React.FC<SearchProps> = ({games, search}) => {
     const [query, setQuery] = useState({
         gameId: 'pso2ngs',
         vcUse: '',
+        tags: [],
     } as SearchQuery)
+
+    // 検索タグの設定
+    const tagSelect = ((tagId:string) => {
+        const include = query.tags?.includes(tagId)
+        if(!include) {
+            setQuery(query => ({...query, tags: [...query.tags, tagId]}))
+            return
+        }
+    })
+    const tagDelete = ((tagId:string) => {
+        setQuery(query => ({...query, tags: query.tags.filter((t) => t !== tagId)}))
+    })
+    
+
     // サーチウィンドウの選択状態
     const [windowActive, setWindowActive] = useState(false)
     const overMouse = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -176,14 +201,37 @@ const Search:React.FC<SearchProps> = ({games, search}) => {
                     </select>
                 </div>
                 <hr/>
-                <span>フリーワード検索</span>
+                <div className={styles.item}>
+                    <label>タグ検索</label>
+                    <select onChange={(e) => tagSelect(e.target.value)}>
+                        <option value="">未選択</option>
+                        {
+                            tags().map((v) => (
+                                <option key={v.key} value={v.key}>{v.value}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+                <div className={styles.tags}>
+                    {
+                        query.tags.map((v) =>(
+                            <span key={v}>
+                                {convertTags(v as PostTagsEnum)}
+                                <button onClick={(e)=> tagDelete(v)}>X</button>
+                            </span>
+                        ))
+                    }
+                </div>
+                
+                <hr/>
+                <span className={styles.label}>フリーワード検索</span>
                 <div className={styles.item}>
                     <label>サーバ</label>
-                    <input></input>
+                    <input onChange={(e)=>setQuery({...query, serverName: e.target.value})}></input>
                 </div>
                 <div className={styles.item}>
                     <label>名前</label>
-                    <input></input>
+                    <input onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
                 </div>
                 <hr/>
                 <div className={styles.searchbtn}>

@@ -7,7 +7,7 @@ import Card from '../components/card'
 import {getGames, findPosts} from '../lib/gen/api/forum'
 import { Game } from '../lib/gen/models/Game'
 import { InferGetServerSidePropsType } from 'next'
-import { Post } from '../lib/gen/models/Post'
+import { Post, PostTagsEnum } from '../lib/gen/models/Post'
 import GameToPosts from '../lib/helper/GameToPosts'
 
 import React, { useState } from 'react';
@@ -48,13 +48,33 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
   const search = ((query: SearchQuery) => {
     console.log(query);
     try {
+      // gameid
       let posts = gameToPosts.filter((m) => m.key === query.gameId)[0].posts
+      // 目的
       if(query.purpose) {
         posts = posts.filter((m) => m.purpose === query.purpose)
       }
+      // VC
       if(query.vcUse) {
         posts = posts.filter((m) => m.vcUse === query.vcUse)
       }
+      if(query.serverName) {
+        posts = posts.filter((m) => {
+          if(!m.server) {
+            return false
+          }
+          return m.server.indexOf(query.serverName!) !== -1
+        })
+      }
+      if(query.playerName) {
+        posts = posts.filter((m) => m.playerName.indexOf(query.serverName!) !== -1)
+      }
+      // Tag
+      if(query.tags) {
+        query.tags.forEach((t) => {
+          posts = posts.filter((m) => m.tags?.includes(t as PostTagsEnum))
+        })
+      }      
       setViewPosts(posts)
     } catch(error) {
       console.error(error);

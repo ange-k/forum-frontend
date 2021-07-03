@@ -1,3 +1,5 @@
+@import "./Tags.scss";
+
 .container {
     z-index: 999;
     position: fixed;
@@ -89,11 +91,16 @@ $active-bgc: #000;
     margin-bottom: 1rem;
 }
 
-.window span {
+.window .label {
     padding-left: 1rem;
 }
 
 .searchbtn {
     padding-right: 1rem;
     text-align: right;
+}
+
+.tags {
+    padding-left: 2rem;
+    margin-top: 1rem;
 }

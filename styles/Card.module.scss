@@ -1,3 +1,5 @@
+@import "./Tags.scss";
+
 .container {
     display: flex;
     flex-direction: column;
@@ -62,20 +64,4 @@ $active-bgc: #000;
 .created {
     font-size: 0.85rem;
     text-align: right;
-}
-
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.tags span {
-    margin: 0 .1em .6em 0;
-    padding: .6em;
-    line-height: 1px;
-    color: #0000ee;
-    background-color: #fff;
-    border: 1px solid #0000ee;
-    border-radius: 2em;
-    font-size: 0.75rem;
 }
