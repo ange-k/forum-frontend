@@ -57,6 +57,9 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
 
     // 検索タグの設定
     const tagSelect = ((tagId:string) => {
+        if(!tagId) {
+            return;
+        }
         const include = query.tags?.includes(tagId)
         if(query.tags.length > 4) {
             setDisableTagSelect(true);
@@ -74,7 +77,6 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
         setQuery(query => ({...query, tags: query.tags.filter((t) => t !== tagId)}))
         setDisableTagSelect(false);
     })
-        
 
     return (
         <div className={setActiveStatus(styles.window)}>
@@ -100,7 +102,7 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
                 </select>
             </div>
             <div className={styles.item}>
-                <label>VC</label>
+                <label>ボイスチャット</label>
                 <select onChange={(e) => setQuery({...query, vcUse: e.target.value})}>
                     <option value="">未選択</option>
                     {
@@ -135,26 +137,33 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
             <hr className={styles.hr}/>
             <div className={styles.item}>
                 <label>サーバ</label>
-                <input onChange={(e)=>setQuery({...query, server: e.target.value})}></input>
+                <input maxLength={15} onChange={(e)=>setQuery({...query, server: e.target.value})}></input>
             </div>
             <div className={styles.item}>
                 <label>名前</label>
-                <input onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
+                <input maxLength={15} onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
             </div>
             <div className={styles.item}>
                 <label>環境</label>
-                <input onChange={(e)=>setQuery({...query, device: e.target.value})}></input>
+                <input maxLength={15} onChange={(e)=>setQuery({...query, device: e.target.value})}></input>
+            </div>
+            <div className={styles.item}>
+                <label>削除キー</label>
+                <input maxLength={15} onChange={(e)=>setQuery({...query, deleteKey: e.target.value})}></input>
             </div>
             <hr className={styles.hr}/>
             <div className={styles.textarea}>
-                <textarea onChange={(e) => setQuery({...query, comment: e.target.value})}>
+                <textarea
+                    maxLength={250}
+                    placeholder="必ず連絡を取る手段を記入しましょう。個人情報の記載はお避けください。&#13;また、削除キーを入力しなかった場合は削除することができなくなりますので注意してください。&#13;ただし、投稿データは1ヶ月程度で自動削除されます。" 
+                    onChange={(e) => setQuery({...query, comment: e.target.value})}>
                 </textarea>
             </div>
             <hr className={styles.hr}/>
             <div className={styles.postbtn}>
                 <button onClick={(e) => {
                     e.preventDefault;
-                }}>送信</button>
+                }}>投稿</button>
             </div>   
         </div>
     )

@@ -107,10 +107,10 @@ const Window:React.FC<WindowProps> = ({games, search}) => {
             <ul className={setActiveStatus(styles.tab)}>
                 <li className={setTabClassName(TabName.SEARCH, styles.menu)}
                     onClick={clickSearch}
-                >search</li>
+                >検索する</li>
                 <li className={setTabClassName(TabName.POST, styles.menu)}
                     onClick={clickPost}
-                >post</li>
+                >投稿する</li>
                 <div className={styles.control}>
                     <button onClick={clickViewBtn}>
                         {windowVisble ? '+' : '-'}

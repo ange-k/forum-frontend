@@ -84,7 +84,7 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
                 </select>
             </div>
             <div className={styles.item}>
-                <label>VC</label>
+                <label>ボイスチャット</label>
                 <select onChange={(e) => setQuery({...query, vcUse: e.target.value})}>
                     <option value="">未選択</option>
                     {
