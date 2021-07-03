@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 
-import Search, { SearchQuery } from '../components/search'
+import Window from '../components/window'
 import Card from '../components/card'
 import {getGames, findPosts} from '../lib/gen/api/forum'
 import { Game } from '../lib/gen/models/Game'
@@ -12,6 +12,7 @@ import GameToPosts from '../lib/helper/GameToPosts'
 
 import React, { useState } from 'react';
 import { getGameName } from '../lib/helper/genHelper'
+import { SearchQuery } from '../components/searchTab'
 
 export const getServerSideProps = async () => {
   const games:Game[] = await getGames()
@@ -90,7 +91,7 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
         <link rel="preconnect" href="https://fonts.gstatic.com"/>
         <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet"/>
       </Head>
-      <Search games={games} search={search}/>
+      <Window games={games} search={search}/>
       <main className={styles.main}>
         {viewPosts.map(post => (
             <Card key={post.uuid} gameName={getGameName(games, post.gameId)} post={post}/>
