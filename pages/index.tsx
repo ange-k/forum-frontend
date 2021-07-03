@@ -11,6 +11,7 @@ import { Post } from '../lib/gen/models/Post'
 import GameToPosts from '../lib/helper/GameToPosts'
 
 import React, { useState } from 'react';
+import { getGameName } from '../lib/helper/genHelper'
 
 export const getServerSideProps = async () => {
   const games:Game[] = await getGames()
@@ -38,26 +39,19 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
   const [gameToPostsOrigin] = useState(gameToPosts)
 
   const init = (gameToPosts:GameToPosts[]) => gameToPosts.flatMap((gameToPost) => {
-    return {
-      key: gameToPost.key,
-      name: gameToPost.name,
-      posts: gameToPost.posts.slice(0, 20)
-    } as GameToPosts
-  }) // 各ポストデータの先頭20個ずつ
+    return gameToPost.posts.slice(0, 20)
+  }).sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()) // 各ポストデータの先頭20個ずつ
+
   const [viewPosts, setViewPosts] = useState(init(gameToPosts))
   // サーチコンポーネントから実行される検索処理
   const search = ((query: SearchQuery) => {
     console.log(query);
     try {
-      let gameToPost = gameToPosts.filter((m) => m.key === query.gameId)[0].posts
+      let posts = gameToPosts.filter((m) => m.key === query.gameId)[0].posts
       if(query.purpose) {
-        gameToPost = gameToPost.filter((m) => m.purpose === query.purpose)
+        posts = posts.filter((m) => m.purpose === query.purpose)
       }
-      setViewPosts([{
-        key: query.gameId,
-        name: games.filter((g) => g.idName === query.gameId)[0].viewName,
-        posts: gameToPost
-      }])
+      setViewPosts(posts)
     } catch(error) {
       console.error(error);
     }
@@ -74,10 +68,8 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
       </Head>
       <Search games={games} search={search}/>
       <main className={styles.main}>
-        {viewPosts.map(gameToPost => (
-            gameToPost.posts.map(post => (
-              <Card key={post.uuid} gameName={gameToPost.name} post={post}/>
-            ))
+        {viewPosts.map(post => (
+            <Card key={post.uuid} gameName={getGameName(games, post.gameId)} post={post}/>
         ))}
       </main>
 

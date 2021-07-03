@@ -1,6 +1,6 @@
 import React from 'react';
 import { Post } from '../lib/gen/models/Post';
-import { convertPropose } from '../lib/helper/genHelper';
+import { convertPropose, convertTags } from '../lib/helper/genHelper';
 import styles from '../styles/Card.module.scss'
 
 type CardProps = ({
@@ -28,7 +28,13 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                     <div>{convertPropose(post.purpose)}</div>
                 </div>
                 <hr/>
-                任意のタグ
+                <div className={styles.tags}>
+                    {
+                        post.tags?.map((tag) => (
+                            <span key={tag}>{convertTags(tag)}</span>
+                        ))
+                    }
+                </div>
                 <hr/>
                 <div className={styles.textarea}>
                     <span>{post.comment}</span>
