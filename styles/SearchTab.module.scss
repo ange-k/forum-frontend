@@ -1,48 +1,6 @@
-$inactive-bgc: #666;
-$active-bgc: #000;
-
-.window {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: $active-bgc;
-    color: #fff;
-    padding: 1rem 0;
-    opacity: 0.1;
-}
-.window.active {
-    opacity: 1.0;
-}
-.container .window.invisible {
-    opacity: 0;
-}
-.window .item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 95%;
-    padding-left: 2rem;
-}
-.item select {
-    max-width: 80%;
-}
-
-.window hr {
-    width: 80%;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-.window .label {
-    padding-left: 1rem;
-}
+@import './TabCommon.scss';
 
 .searchbtn {
     padding-right: 1rem;
     text-align: right;
-}
-
-.tags {
-    padding-left: 2rem;
-    margin-top: 1rem;
 }

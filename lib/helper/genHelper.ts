@@ -81,3 +81,33 @@ export const convertTags = (tag: PostTagsEnum) => {
             return "unknown"
     }
 }
+
+export const proposes = () => {
+    const enums = Object.entries(PostPurposeEnum)
+    return enums.map((k, v) => {
+        return {
+            key: k[1],
+            value: convertPropose(k[1])
+        }
+    })
+}
+
+export const vcuses = () => {
+    const enums = Object.entries(PostVcUseEnum)
+    return enums.map((k, v) => {
+        return {
+            key: k[1],
+            value: convertVcUse(k[1])
+        }
+    })
+}
+
+export const tags = () => {
+    const enums = Object.entries(PostTagsEnum)
+    return enums.map((k, v) => {
+        return {
+            key: k[1],
+            value: convertTags(k[1])
+        }
+    })
+}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Game } from '../lib/gen/models/Game';
 import { PostPurposeEnum, PostTagsEnum, PostVcUseEnum } from '../lib/gen/models/Post';
-import { convertPropose, convertTags, convertVcUse } from '../lib/helper/genHelper';
+import { convertPropose, convertTags, convertVcUse, proposes, tags, vcuses } from '../lib/helper/genHelper';
 import styles from '../styles/SearchTab.module.scss'
 
 type SearchProps = ({
@@ -10,36 +10,6 @@ type SearchProps = ({
     windowVisble: boolean,
     search: (query: SearchQuery) => void,
 })
-
-const proposes = () => {
-    const enums = Object.entries(PostPurposeEnum)
-    return enums.map((k, v) => {
-        return {
-            key: k[1],
-            value: convertPropose(k[1])
-        }
-    })
-}
-
-const vcuses = () => {
-    const enums = Object.entries(PostVcUseEnum)
-    return enums.map((k, v) => {
-        return {
-            key: k[1],
-            value: convertVcUse(k[1])
-        }
-    })
-}
-
-const tags = () => {
-    const enums = Object.entries(PostTagsEnum)
-    return enums.map((k, v) => {
-        return {
-            key: k[1],
-            value: convertTags(k[1])
-        }
-    })
-}
 
 export interface SearchQuery {
     gameId: string,
@@ -161,7 +131,7 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
                 <button onClick={(e) => {
                     e.preventDefault;
                     search(query);
-                }}>Search</button>
+                }}>検索</button>
             </div>
         </div>
     )

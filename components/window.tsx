@@ -91,6 +91,14 @@ const Window:React.FC<WindowProps> = ({games, search}) => {
         return `${className} ${name}`
     }
 
+    const viewTab = () => {
+        if(selectSearchTab) {
+            return <SearchTab games={games} windowActive={windowActive} windowVisble={windowVisble} search={search}/>
+        } else {
+            return <PostTab games={games} windowActive={windowActive} windowVisble={windowVisble}/>
+        }
+    }
+
     return (
         <div className={windowVisble ? `${styles.container}` : `${styles.container} ${styles.invisible}`}
             onMouseEnter={overMouse}
@@ -109,7 +117,9 @@ const Window:React.FC<WindowProps> = ({games, search}) => {
                     </button>
                 </div>
             </ul>
-            <SearchTab games={games} windowActive={windowActive} windowVisble={windowVisble} search={search}/>
+            {
+                viewTab()
+            }
         </div>
     )
 }
