@@ -28,6 +28,10 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                     <div>{convertPropose(post.purpose)}</div>
                 </div>
                 <div className={styles.item}>
+                    <label>環境</label>
+                    <div>{post.device}</div>
+                </div>
+                <div className={styles.item}>
                     <label>VC</label>
                     <div>{convertVcUse(post.vcUse)}</div>
                 </div>

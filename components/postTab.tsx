@@ -141,6 +141,10 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
                 <label>名前</label>
                 <input onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
             </div>
+            <div className={styles.item}>
+                <label>環境</label>
+                <input onChange={(e)=>setQuery({...query, device: e.target.value})}></input>
+            </div>
             <hr className={styles.hr}/>
             <div className={styles.textarea}>
                 <textarea onChange={(e) => setQuery({...query, comment: e.target.value})}>

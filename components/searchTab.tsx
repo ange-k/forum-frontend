@@ -17,6 +17,7 @@ export interface SearchQuery {
     tags: string[],
     purpose?: string,
     serverName?: string,
+    device?: string,
     playerName?: string,
 }
 
@@ -125,6 +126,10 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
             <div className={styles.item}>
                 <label>名前</label>
                 <input onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
+            </div>
+            <div className={styles.item}>
+                <label>環境</label>
+                <input onChange={(e)=>setQuery({...query, device: e.target.value})}></input>
             </div>
             <hr className={styles.hr}/>
             <div className={styles.searchbtn}>

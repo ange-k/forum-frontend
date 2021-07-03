@@ -36,8 +36,6 @@ export const getServerSideProps = async () => {
 }
 
 export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [gamesOrigin] = useState(games)
-  const [gameToPostsOrigin] = useState(gameToPosts)
 
   const init = (gameToPosts:GameToPosts[]) => gameToPosts.flatMap((gameToPost) => {
     return gameToPost.posts.slice(0, 20)
@@ -69,6 +67,9 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
       }
       if(query.playerName) {
         posts = posts.filter((m) => m.playerName.indexOf(query.serverName!) !== -1)
+      }
+      if(query.device) {
+        posts = posts.filter((m) => m.device.indexOf(query.device!) !== -1)
       }
       // Tag
       if(query.tags) {
