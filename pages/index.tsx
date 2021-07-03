@@ -8,7 +8,7 @@ import {getGames, findPosts} from '../lib/gen/api/forum'
 import { Game } from '../lib/gen/models/Game'
 import { InferGetServerSidePropsType } from 'next'
 import { Post } from '../lib/gen/models/Post'
-import GameToPosts from '../lib/gen/models/GameToPosts'
+import GameToPosts from '../lib/helper/GameToPosts'
 
 import React, { useState } from 'react';
 

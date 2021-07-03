@@ -38,7 +38,7 @@ export interface Post {
      * @type {Date}
      * @memberof Post
      */
-    writeDay?: string; // Next.js がjson parseできないので.
+    writeDay?: string;
     /**
      * 投稿先のゲームのID
      * @type {string}
@@ -65,10 +65,10 @@ export interface Post {
     purpose: PostPurposeEnum;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof Post
      */
-    vcUse: boolean;
+    vcUse: PostVcUseEnum;
     /**
      * 
      * @type {string}
@@ -86,7 +86,7 @@ export interface Post {
      * @type {Date}
      * @memberof Post
      */
-    createdAt?: string; // Next.js がjson parseできないので.
+    createdAt?: string;
     /**
      * 
      * @type {UserData}
@@ -99,6 +99,12 @@ export interface Post {
      * @memberof Post
      */
     deleteKey?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Post
+     */
+    tags?: Array<PostTagsEnum>;
 }
 
 /**
@@ -112,6 +118,33 @@ export enum PostPurposeEnum {
     TeamJoin = 'TEAM_JOIN',
     Event = 'EVENT',
     Other = 'OTHER'
+}/**
+* @export
+* @enum {string}
+*/
+export enum PostVcUseEnum {
+    Use = 'USE',
+    Unuse = 'UNUSE',
+    Either = 'EITHER'
+}/**
+* @export
+* @enum {string}
+*/
+export enum PostTagsEnum {
+    PsEx = 'PS_EX',
+    PsJoy = 'PS_JOY',
+    PsEasy = 'PS_EASY',
+    TimeSociety = 'TIME_SOCIETY',
+    TimeStudent = 'TIME_STUDENT',
+    TimeShift = 'TIME_SHIFT',
+    TimeNightly = 'TIME_NIGHTLY',
+    TimeRandom = 'TIME_RANDOM',
+    Years10 = 'YEARS_10',
+    Years20 = 'YEARS_20',
+    YearsOv30 = 'YEARS_OV_30',
+    PlayEasy = 'PLAY_EASY',
+    PlayVeteran = 'PLAY_VETERAN',
+    PlayHero = 'PLAY_HERO'
 }
 
 export function PostFromJSON(json: any): Post {
@@ -122,7 +155,6 @@ export function PostFromJSONTyped(json: any, ignoreDiscriminator: boolean): Post
     if ((json === undefined) || (json === null)) {
         return json;
     }
-
     return {
         
         'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
@@ -137,6 +169,7 @@ export function PostFromJSONTyped(json: any, ignoreDiscriminator: boolean): Post
         'createdAt': !exists(json, 'createdAt') ? undefined : (dateFormat(new Date(json['createdAt']))),
         'userData': !exists(json, 'userData') ? undefined : UserDataFromJSON(json['userData']),
         'deleteKey': !exists(json, 'deleteKey') ? undefined : json['deleteKey'],
+        'tags': !exists(json, 'tags') ? undefined : json['tags'],
     };
 }
 
@@ -161,6 +194,7 @@ export function PostToJSON(value?: Post | null): any {
         'createdAt': value.createdAt === undefined ? undefined : (value.createdAt),
         'userData': UserDataToJSON(value.userData),
         'deleteKey': value.deleteKey,
+        'tags': value.tags,
     };
 }
 
