@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 
-import Search from '../components/search'
+import Search, { SearchQuery } from '../components/search'
 import Card from '../components/card'
 import {getGames, findPosts} from '../lib/gen/api/forum'
 import { Game } from '../lib/gen/models/Game'
@@ -45,7 +45,23 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
     } as GameToPosts
   }) // 各ポストデータの先頭20個ずつ
   const [viewPosts, setViewPosts] = useState(init(gameToPosts))
-  console.log(viewPosts)
+  // サーチコンポーネントから実行される検索処理
+  const search = ((query: SearchQuery) => {
+    console.log(query);
+    try {
+      let gameToPost = gameToPosts.filter((m) => m.key === query.gameId)[0].posts
+      if(query.purpose) {
+        gameToPost = gameToPost.filter((m) => m.purpose === query.purpose)
+      }
+      setViewPosts([{
+        key: query.gameId,
+        name: games.filter((g) => g.idName === query.gameId)[0].viewName,
+        posts: gameToPost
+      }])
+    } catch(error) {
+      console.error(error);
+    }
+  });
   return (  
     <div className={styles.container}>
       <Head>
@@ -56,7 +72,7 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
         <link rel="preconnect" href="https://fonts.gstatic.com"/>
         <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet"/>
       </Head>
-      <Search/>
+      <Search games={games} search={search}/>
       <main className={styles.main}>
         {viewPosts.map(gameToPost => (
             gameToPost.posts.map(post => (

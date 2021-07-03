@@ -1,7 +1,36 @@
 import React, { useState } from 'react';
+import { Game } from '../lib/gen/models/Game';
+import { PostPurposeEnum } from '../lib/gen/models/Post';
+import { convertPropose } from '../lib/helper/genHelper';
 import styles from '../styles/Search.module.scss'
 
-export default function Search() {
+type SearchProps = ({
+    games: Game[],
+    search: (query: SearchQuery) => void
+})
+
+const proposes = () => {
+    const enums = Object.entries(PostPurposeEnum)
+    return enums.map((k, v) => {
+        return {
+            key: k[1],
+            value: convertPropose(k[1])
+        }
+    })
+}
+
+export interface SearchQuery {
+    gameId: string,
+    purpose?: string,
+    serverName?: string,
+    playerName?: string,
+}
+
+const Search:React.FC<SearchProps> = ({games, search}) => {
+    // Search実行時にわたすサーチクエリ
+    const [query, setQuery] = useState({
+        gameId: 'pso2ngs',
+    } as SearchQuery)
     // サーチウィンドウの選択状態
     const [windowActive, setWindowActive] = useState(false)
     const overMouse = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -103,14 +132,23 @@ export default function Search() {
             <div className={setActiveStatus(styles.window)}>
                 <div className={styles.item}>
                     <label>Game</label>
-                    <select>
-                        <option value="pso2">PSO2</option>
+                    <select onChange={(e)=> setQuery({...query, gameId: e.target.value})}>
+                        {
+                            games.map((game) => (
+                                <option key={game.idName} value={game.idName}>{game.viewName}</option>
+                            ))
+                        }
                     </select>
                 </div>
                 <div className={styles.item}>
                     <label>目的</label>
-                    <select>
-                        <option value="pso2">一緒に遊びたい</option>
+                    <select onChange={(e)=> setQuery({...query, purpose: e.target.value})}>
+                        <option value="">未選択</option>
+                        {
+                            proposes().map((p) => (
+                                <option key={p.key} value={p.key}>{p.value}</option>
+                            ))
+                        }
                     </select>
                 </div>
                 <div className={styles.item}>
@@ -129,7 +167,16 @@ export default function Search() {
                     <label>名前</label>
                     <input></input>
                 </div>
+                <hr/>
+                <div className={styles.searchbtn}>
+                    <button onClick={(e) => {
+                        e.preventDefault;
+                        search(query);
+                    }}>Search</button>
+                </div>
             </div>
         </div>
     )
 }
+
+export default Search

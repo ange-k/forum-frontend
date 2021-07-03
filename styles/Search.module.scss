@@ -79,6 +79,9 @@ $active-bgc: #000;
     width: 95%;
     padding-left: 2rem;
 }
+.item select {
+    max-width: 80%;
+}
 
 .window hr {
     width: 80%;
@@ -88,4 +91,9 @@ $active-bgc: #000;
 
 .window span {
     padding-left: 1rem;
+}
+
+.searchbtn {
+    padding-right: 1rem;
+    text-align: right;
 }

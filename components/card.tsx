@@ -1,30 +1,12 @@
 import React from 'react';
-import { Post, PostPurposeEnum } from '../lib/gen/models/Post';
+import { Post } from '../lib/gen/models/Post';
+import { convertPropose } from '../lib/helper/genHelper';
 import styles from '../styles/Card.module.scss'
 
 type CardProps = ({
     gameName: string,
     post: Post
 })
-
-const convertPropose = (purpose: PostPurposeEnum) => {
-
-    switch(purpose) {
-        case PostPurposeEnum.Event:
-            return "イベント開催したい"
-        case PostPurposeEnum.Play:
-            return "一緒に遊びたい"
-        case PostPurposeEnum.TeamJoin:
-            return "ギルド/チーム等に入りたい"
-        case PostPurposeEnum.TeamLanch:
-            return "ギルド/チーム等の立ち上げメンバー募集"
-        case PostPurposeEnum.TeamScout:
-            return "ギルド/チーム等メンバー募集"
-        case PostPurposeEnum.Other:
-        default:
-            return "その他"
-    }
-}
 
 const Card:React.FC<CardProps> = ({gameName, post}) => {
     return (
