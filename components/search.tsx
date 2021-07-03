@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Game } from '../lib/gen/models/Game';
-import { PostPurposeEnum } from '../lib/gen/models/Post';
-import { convertPropose } from '../lib/helper/genHelper';
+import { PostPurposeEnum, PostVcUseEnum } from '../lib/gen/models/Post';
+import { convertPropose, convertVcUse } from '../lib/helper/genHelper';
 import styles from '../styles/Search.module.scss'
 
 type SearchProps = ({
@@ -19,8 +19,20 @@ const proposes = () => {
     })
 }
 
+const vcuses = () => {
+    const enums = Object.entries(PostVcUseEnum)
+    return enums.map((k, v) => {
+        return {
+            key: k[1],
+            value: convertVcUse(k[1])
+        }
+    })
+}
+
 export interface SearchQuery {
     gameId: string,
+    vcUse: string,
+    tags?: string[],
     purpose?: string,
     serverName?: string,
     playerName?: string,
@@ -30,6 +42,7 @@ const Search:React.FC<SearchProps> = ({games, search}) => {
     // Search実行時にわたすサーチクエリ
     const [query, setQuery] = useState({
         gameId: 'pso2ngs',
+        vcUse: '',
     } as SearchQuery)
     // サーチウィンドウの選択状態
     const [windowActive, setWindowActive] = useState(false)
@@ -153,8 +166,13 @@ const Search:React.FC<SearchProps> = ({games, search}) => {
                 </div>
                 <div className={styles.item}>
                     <label>VC</label>
-                    <select>
-                        <option value="pso2">なし</option>
+                    <select onChange={(e) => setQuery({...query, vcUse: e.target.value})}>
+                        <option value="">未選択</option>
+                        {
+                            vcuses().map((v) => (
+                                <option key={v.key} value={v.key}>{v.value}</option>
+                            ))
+                        }
                     </select>
                 </div>
                 <hr/>

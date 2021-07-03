@@ -1,5 +1,5 @@
 import { Game } from "../gen/models/Game";
-import { PostPurposeEnum, PostTagsEnum } from "../gen/models/Post";
+import { PostPurposeEnum, PostTagsEnum, PostVcUseEnum } from "../gen/models/Post";
 
 export const dateFormat = ((date:Date) => {
     const jst = new Date(date.toLocaleString([], {timeZone:'Asia/Tokyo'}))
@@ -32,6 +32,18 @@ export const convertPropose = (purpose: PostPurposeEnum) => {
         case PostPurposeEnum.Other:
         default:
             return "その他"
+    }
+}
+
+export const convertVcUse = (vc: PostVcUseEnum) => {
+    switch(vc) {
+        case PostVcUseEnum.Use:
+            return "積極的に利用"
+        case PostVcUseEnum.Unuse:
+            return "基本使わない"
+        case PostVcUseEnum.Either:
+        default:
+            return "時と場合による"
     }
 }
 

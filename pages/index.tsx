@@ -43,6 +43,7 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
   }).sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()) // 各ポストデータの先頭20個ずつ
 
   const [viewPosts, setViewPosts] = useState(init(gameToPosts))
+
   // サーチコンポーネントから実行される検索処理
   const search = ((query: SearchQuery) => {
     console.log(query);
@@ -50,6 +51,9 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
       let posts = gameToPosts.filter((m) => m.key === query.gameId)[0].posts
       if(query.purpose) {
         posts = posts.filter((m) => m.purpose === query.purpose)
+      }
+      if(query.vcUse) {
+        posts = posts.filter((m) => m.vcUse === query.vcUse)
       }
       setViewPosts(posts)
     } catch(error) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Post } from '../lib/gen/models/Post';
-import { convertPropose, convertTags } from '../lib/helper/genHelper';
+import { convertPropose, convertTags, convertVcUse } from '../lib/helper/genHelper';
 import styles from '../styles/Card.module.scss'
 
 type CardProps = ({
@@ -26,6 +26,10 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                 <div className={styles.item}>
                     <label>目的</label>
                     <div>{convertPropose(post.purpose)}</div>
+                </div>
+                <div className={styles.item}>
+                    <label>VC</label>
+                    <div>{convertVcUse(post.vcUse)}</div>
                 </div>
                 <hr/>
                 <div className={styles.tags}>
