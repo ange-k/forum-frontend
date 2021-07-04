@@ -8,4 +8,7 @@ module.exports = {
   experimental: {
     optimizeFonts: true,
   },
+  plugins: [
+    require("autoprefixer")
+  ]
 }

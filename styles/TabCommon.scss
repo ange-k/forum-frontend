@@ -9,11 +9,8 @@ $active-bgc: #000;
     color: #fff;
     padding: 1rem 0;
 }
-.window.active {
-    opacity: 1.0;
-}
 .window.invisible {
-    opacity: 0;
+    display: none;
 }
 .window .item {
     display: flex;
@@ -55,7 +52,8 @@ $active-bgc: #000;
     justify-content: center;
     align-items: center;
     height: 24px;
-    width: 72px;
+    width: 96px;
+    overflow-wrap: unset;
 }
 
 .btnbase span {
@@ -83,4 +81,13 @@ $active-bgc: #000;
     font-size: 0.75rem;
 
     cursor: pointer;
+}
+
+.icon {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.icon span {
+    padding-left: 4px;
 }

@@ -48,8 +48,13 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                     <pre>{post.comment}</pre>
                 </div>
                 <div className={styles.created}>
-                    <span>投稿日時:</span>
-                    <span>{post.createdAt}</span>
+                    <button className={styles.squarebtn}>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                    </button>
+                    <div>
+                        <span>投稿日時:</span>
+                        <span>{post.createdAt}</span>
+                    </div>
                 </div>
             </div>
         </div>
