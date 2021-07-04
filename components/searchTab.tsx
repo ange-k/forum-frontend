@@ -66,7 +66,15 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
                 <label>Game</label>
                 <select onChange={(e)=> setQuery({...query, gameId: e.target.value})}>
                     {
-                        games.map((game) => (
+                        games.sort((a,b) => {
+                            if(a.idName<b.idName){
+                                return -1;
+                            }
+                            if(a.idName>b.idName) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map((game) => (
                             <option key={game.idName} value={game.idName}>{game.viewName}</option>
                         ))
                     }

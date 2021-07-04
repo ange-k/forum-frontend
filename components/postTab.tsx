@@ -4,6 +4,7 @@ import { PostPurposeEnum, PostTagsEnum, PostVcUseEnum } from '../lib/gen/models/
 import { convertTags, proposes, tags, vcuses } from '../lib/helper/genHelper';
 import styles from '../styles/PostTab.module.scss'
 
+
 type postProps = ({
     games: Game[],
     windowActive: boolean,
@@ -20,6 +21,10 @@ export interface PostQuery {
     comment: string,
     tags: string[],
     deleteKey: string,
+    userData?: {
+        ipAddr: string,
+        userAgent: string
+    }
 }
 
 const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
@@ -77,6 +82,46 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
         setQuery(query => ({...query, tags: query.tags.filter((t) => t !== tagId)}))
         setDisableTagSelect(false);
     })
+
+    const postApi = (query: PostQuery) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/post');
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onload = () => {
+            console.log(xhr.status);
+        };
+        xhr.onerror = () => {
+            console.error(xhr.status);
+        };
+        xhr.send(JSON.stringify(query))
+    }
+
+    const queryValidation = (query: PostQuery) => {
+        if(!query.gameId) {
+            return false;
+        }
+
+        if(!query.playerName) {
+            return false;
+        }
+
+        if(!query.purpose) {
+            return false;
+        }
+
+        if(!query.vcUse) {
+            return false;
+        }
+
+        if(!query.device) {
+            return false
+        }
+
+        if(!query.comment) {
+            return false;
+        }
+        return true;        
+    }
 
     return (
         <div className={setActiveStatus(styles.window)}>
@@ -163,6 +208,9 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
             <div className={styles.postbtn}>
                 <button onClick={(e) => {
                     e.preventDefault;
+                    if(queryValidation(query)) {
+                        postApi(query);
+                    }
                 }}>投稿</button>
             </div>   
         </div>

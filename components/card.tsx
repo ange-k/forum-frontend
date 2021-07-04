@@ -45,7 +45,7 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                 </div>
                 <hr/>
                 <div className={styles.textarea}>
-                    <span>{post.comment}</span>
+                    <pre>{post.comment}</pre>
                 </div>
                 <div className={styles.created}>
                     <span>投稿日時:</span>
