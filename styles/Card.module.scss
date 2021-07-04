@@ -20,6 +20,7 @@ $active-bgc: #000;
 
 .title div {
     width: 90%;
+    overflow-wrap: break-word; 
 }
 
 .window {
@@ -46,13 +47,14 @@ $active-bgc: #000;
 }
 
 .item label {
-    width: 30%;
+    width: 25%;
     font-size: 1.1rem;
 }
 .item div {
-    width: 70%;
+    width: 75%;
     padding-left: 1rem;
     background-color: #ddd;
+    overflow-wrap: break-word;    
 }
 
 .textarea {

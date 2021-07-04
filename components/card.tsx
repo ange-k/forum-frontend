@@ -12,7 +12,7 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
     return (
         <div className={styles.container}>
             <div className={styles.title}>
-                <div>タイトル</div>
+                <div>{post.title}</div>
             </div>
             <div className={styles.window}>
                 <div className={styles.item}>

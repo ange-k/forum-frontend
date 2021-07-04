@@ -50,6 +50,12 @@ export interface Post {
      * @type {string}
      * @memberof Post
      */
+    title: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Post
+     */
     server?: string;
     /**
      * プレイヤーの名前
@@ -113,10 +119,15 @@ export interface Post {
 */
 export enum PostPurposeEnum {
     Play = 'PLAY',
+    Friend = 'FRIEND',
+    Guruguru = 'GURUGURU',
+    EndContent = 'END_CONTENT',
+    Helpme = 'HELPME',
     TeamLanch = 'TEAM_LANCH',
     TeamScout = 'TEAM_SCOUT',
     TeamJoin = 'TEAM_JOIN',
     Event = 'EVENT',
+    Trade = 'TRADE',
     Other = 'OTHER'
 }/**
 * @export
@@ -160,6 +171,7 @@ export function PostFromJSONTyped(json: any, ignoreDiscriminator: boolean): Post
         'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
         'writeDay': !exists(json, 'writeDay') ? undefined : (new Date(json['writeDay']).toISOString()),
         'gameId': json['gameId'],
+        'title': json['title'],
         'server': !exists(json, 'server') ? undefined : json['server'],
         'playerName': json['playerName'],
         'purpose': json['purpose'],
@@ -185,6 +197,7 @@ export function PostToJSON(value?: Post | null): any {
         'uuid': value.uuid,
         'writeDay': value.writeDay === undefined ? undefined : (value.writeDay.substr(0,10)),
         'gameId': value.gameId,
+        'title': value.title,
         'server': value.server,
         'playerName': value.playerName,
         'purpose': value.purpose,

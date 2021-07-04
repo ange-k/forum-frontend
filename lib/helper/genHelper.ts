@@ -21,6 +21,14 @@ export const convertPropose = (purpose: PostPurposeEnum) => {
     switch(purpose) {
         case PostPurposeEnum.Event:
             return "イベント開催したい"
+        case PostPurposeEnum.Friend:
+            return "フレンド募集"
+        case PostPurposeEnum.Guruguru:
+            return "周回コンテンツ募集"
+        case PostPurposeEnum.EndContent:
+            return "エンドコンテンツ募集"
+        case PostPurposeEnum.Helpme:
+            return "助けてほしい"
         case PostPurposeEnum.Play:
             return "一緒に遊びたい"
         case PostPurposeEnum.TeamJoin:
@@ -29,6 +37,8 @@ export const convertPropose = (purpose: PostPurposeEnum) => {
             return "ギルド/チーム等の立ち上げメンバー募集"
         case PostPurposeEnum.TeamScout:
             return "ギルド/チーム等メンバー募集"
+        case PostPurposeEnum.Trade:
+            return "アイテム取引"
         case PostPurposeEnum.Other:
         default:
             return "その他"
