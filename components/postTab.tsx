@@ -182,15 +182,21 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
             <hr className={styles.hr}/>
             <div className={styles.item}>
                 <label>サーバ</label>
-                <input maxLength={15} onChange={(e)=>setQuery({...query, server: e.target.value})}></input>
+                <input 
+                 placeholder="例:Asia/Ship2/Gaia"
+                 maxLength={15} onChange={(e)=>setQuery({...query, server: e.target.value})}></input>
             </div>
             <div className={styles.item}>
                 <label>名前</label>
-                <input maxLength={15} onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
+                <input 
+                  placeholder="ニックネーム等"
+                  maxLength={15} onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
             </div>
             <div className={styles.item}>
                 <label>環境</label>
-                <input maxLength={15} onChange={(e)=>setQuery({...query, device: e.target.value})}></input>
+                <input 
+                  placeholder="例:PC,PS4,PS5,スマホ"
+                  maxLength={15} onChange={(e)=>setQuery({...query, device: e.target.value})}></input>
             </div>
             <div className={styles.item}>
                 <label>削除キー</label>
@@ -199,7 +205,7 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
             <hr className={styles.hr}/>
             <div className={styles.textarea}>
                 <textarea
-                    maxLength={250}
+                    maxLength={300}
                     placeholder="必ず連絡を取る手段を記入しましょう。個人情報の記載はお避けください。&#13;また、削除キーを入力しなかった場合は削除することができなくなりますので注意してください。&#13;ただし、投稿データは1ヶ月程度で自動削除されます。" 
                     onChange={(e) => setQuery({...query, comment: e.target.value})}>
                 </textarea>

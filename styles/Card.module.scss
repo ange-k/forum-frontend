@@ -64,6 +64,8 @@ $active-bgc: #000;
 .textarea pre {
     margin: 0;
     white-space: pre-wrap ;
+    overflow: auto;
+    max-height: 8em;
 }
 
 .created {
