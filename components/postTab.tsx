@@ -13,6 +13,7 @@ type postProps = ({
 
 export interface PostQuery {
     gameId: string,
+    title: string,
     server: string,
     playerName: string,
     purpose: string,
@@ -50,6 +51,7 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
 
     const [query, setQuery] = useState({
         gameId: 'pso2ngs',
+        title: '',
         server: '',
         playerName: '',
         purpose: PostPurposeEnum.Play,
@@ -138,7 +140,6 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
             <div className={styles.item}>
                 <label>目的</label>
                 <select onChange={(e)=> setQuery({...query, purpose: e.target.value})}>
-                    <option value="">未選択</option>
                     {
                         proposes().map((p) => (
                             <option key={p.key} value={p.key}>{p.value}</option>
@@ -149,7 +150,6 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
             <div className={styles.item}>
                 <label>ボイスチャット</label>
                 <select onChange={(e) => setQuery({...query, vcUse: e.target.value})}>
-                    <option value="">未選択</option>
                     {
                         vcuses().map((v) => (
                             <option key={v.key} value={v.key}>{v.value}</option>
@@ -181,6 +181,12 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
             </div>
             <hr className={styles.hr}/>
             <div className={styles.item}>
+                <label>タイトル</label>
+                <input 
+                 placeholder="この投稿のタイトルを記載"
+                 maxLength={20} onChange={(e)=>setQuery({...query, title: e.target.value})}></input>
+            </div>
+            <div className={styles.item}>
                 <label>サーバ</label>
                 <input 
                  placeholder="例:Asia/Ship2/Gaia"
@@ -200,24 +206,29 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
             </div>
             <div className={styles.item}>
                 <label>削除キー</label>
-                <input maxLength={15} onChange={(e)=>setQuery({...query, deleteKey: e.target.value})}></input>
+                <input 
+                  placeholder="投稿を後で消す際に使用"
+                  maxLength={15} onChange={(e)=>setQuery({...query, deleteKey: e.target.value})}></input>
             </div>
             <hr className={styles.hr}/>
             <div className={styles.textarea}>
                 <textarea
                     maxLength={300}
-                    placeholder="必ず連絡を取る手段を記入しましょう。個人情報の記載はお避けください。&#13;また、削除キーを入力しなかった場合は削除することができなくなりますので注意してください。&#13;ただし、投稿データは1ヶ月程度で自動削除されます。" 
+                    placeholder="このサービスに連絡を取る方法はございません。必ず連絡手段を記入しましょう。住所、性別など、個人情報の記載はお避けください。&#13;削除キーを入力しなかった場合は削除することができなくなりますので注意してください。&#13;※投稿データは1ヶ月程度で自動削除されます。" 
                     onChange={(e) => setQuery({...query, comment: e.target.value})}>
                 </textarea>
             </div>
             <hr className={styles.hr}/>
             <div className={styles.postbtn}>
-                <button onClick={(e) => {
+                <button className={styles.btnbase} onClick={(e) => {
                     e.preventDefault;
                     if(queryValidation(query)) {
                         postApi(query);
                     }
-                }}>投稿</button>
+                }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                    <span>投稿</span>
+                </button>
             </div>   
         </div>
     )

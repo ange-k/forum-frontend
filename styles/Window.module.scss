@@ -30,7 +30,8 @@ $active-bgc: #000;
     color: #fff;
     padding: 0;
     margin: 0;
-    background: rgba(0, 0, 0, 0.1); // 切り替え
+
+    background: rgba(0, 0, 0, 1.0);
 }
 .tab.active {
     background: rgba(0, 0, 0, 1.0);
@@ -43,10 +44,9 @@ $active-bgc: #000;
     display: block;
     background-color: $inactive-bgc;
     padding:0.1rem 0;
-    width: 25%;
+    width: 35%;
     text-align: center;
     border-right: 1px solid $active-bgc;
-    opacity: 0.1;
     cursor: pointer;
 }
 .menu.select {
@@ -61,8 +61,22 @@ $active-bgc: #000;
     opacity: 0;
 }
 
-.control {
+.btnbase {
     display: flex;
-    justify-content: flex-end;
-    width: 50%;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+
+    border-radius: 50%;
+    line-height: 40px;
+
+    position: fixed;
+    top: 85px;
+    right: 1rem;
+
+    cursor: pointer;
+
+    z-index: 1000;
+    
 }

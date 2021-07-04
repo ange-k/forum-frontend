@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { exists } from './runtime';
 /**
  * 取り扱うゲームのモデル
  * @export

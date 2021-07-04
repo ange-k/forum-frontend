@@ -10,7 +10,6 @@ $active-bgc: #000;
     background-color: $active-bgc;
     color: #fff;
     padding: 1rem 0;
-    opacity: 0.1;
 }
 .window.active {
     opacity: 1.0;
@@ -51,4 +50,16 @@ $active-bgc: #000;
     .hr {
         display: none;
     }
+}
+
+.btnbase {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 72px;
+}
+
+.btnbase span {
+    padding-left: 2px;
 }

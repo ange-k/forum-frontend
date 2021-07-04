@@ -59,7 +59,7 @@ $active-bgc: #000;
 
 .textarea {
     overflow-wrap: break-word;
-    background-color: #fefefe;
+    background-color: #eee;
     height: 100%;
 }
 
@@ -67,10 +67,15 @@ $active-bgc: #000;
     margin: 0;
     white-space: pre-wrap ;
     overflow: auto;
-    max-height: 8em;
+    max-height: 10em;
+    background-color: #fefefe;
+    font-family: 'Kosugi Maru', 'Helvetica Neue', sans-serif;
+    font-size: 0.85rem;
 }
 
 .created {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
     font-size: 0.85rem;
-    text-align: right;
 }

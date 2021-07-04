@@ -134,9 +134,9 @@ export enum PostPurposeEnum {
 * @enum {string}
 */
 export enum PostVcUseEnum {
+    Either = 'EITHER',
     Use = 'USE',
     Unuse = 'UNUSE',
-    Either = 'EITHER'
 }/**
 * @export
 * @enum {string}

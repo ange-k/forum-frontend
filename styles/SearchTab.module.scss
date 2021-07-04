@@ -1,6 +1,7 @@
 @import './TabCommon.scss';
 
 .searchbtn {
+    display: flex;
+    justify-content: flex-end;
     padding-right: 1rem;
-    text-align: right;
 }
