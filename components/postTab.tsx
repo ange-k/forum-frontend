@@ -50,7 +50,7 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
     const [disableTagSelect, setDisableTagSelect] = useState(false)
 
     const [query, setQuery] = useState({
-        gameId: 'pso2ngs',
+        gameId: 'genshin',
         title: '',
         server: '',
         playerName: '',
@@ -217,7 +217,7 @@ const PostTab:React.FC<postProps> = ({games, windowActive, windowVisble}) => {
             <div className={styles.textarea}>
                 <textarea
                     maxLength={300}
-                    placeholder="このサービスに連絡を取る方法はございません。必ず連絡手段を記入しましょう。住所、性別など、個人情報の記載はお避けください。&#13;削除キーを入力しなかった場合は削除することができなくなりますので注意してください。&#13;※投稿データは1ヶ月程度で自動削除されます。" 
+                    placeholder="本文を記入してください。このサービスに連絡を取る方法はございません。必ず連絡手段を記入しましょう。住所、性別など、個人情報の記載はお避けください。&#13;削除キーを入力しなかった場合は削除することができなくなりますので注意してください。&#13;※投稿データは1ヶ月程度で自動削除されます。" 
                     onChange={(e) => setQuery({...query, comment: e.target.value})}>
                 </textarea>
             </div>
