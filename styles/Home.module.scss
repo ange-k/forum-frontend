@@ -1,16 +1,23 @@
 .container {
   min-height: 100vh;
-  padding: 0 2.5rem;
+  padding: 0 5rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   height: 100vh;
 }
 
+@media (max-width: 1000px) {
+  .container {
+    padding: 0 2.5rem;
+  }
+}
+
+
 .main {
   padding: 1rem 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -33,11 +40,4 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
-}
-
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
 }
