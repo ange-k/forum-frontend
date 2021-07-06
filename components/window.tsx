@@ -114,11 +114,19 @@ const Window:React.FC<WindowProps> = ({games, search}) => {
         >
             <ul className={setActiveStatus(styles.tab)}>
                 <li className={setTabClassName(TabName.SEARCH, styles.menu)}
-                    onClick={clickSearch}
-                >検索する</li>
+                    onClick={clickSearch}>
+                    <div className={styles.svgtab}>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 19.59V8l-6-6H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c.45 0 .85-.15 1.19-.4l-4.43-4.43c-.8.52-1.74.83-2.76.83-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5c0 1.02-.31 1.96-.83 2.75L20 19.59zM9 13c0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3-3 1.34-3 3z"/></svg>
+                        <span>検索する</span>
+                    </div>
+                </li>
                 <li className={setTabClassName(TabName.POST, styles.menu)}
-                    onClick={clickPost}
-                >投稿する</li>
+                    onClick={clickPost}>
+                    <div className={styles.svgtab}>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fff"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <span>投稿する</span>
+                    </div>
+                </li>
                 <div className={styles.control}>
                 </div>
             </ul>

@@ -49,6 +49,7 @@ $active-bgc: #000;
     background-color: $active-bgc;
     text-decoration:underline;
     text-decoration-color: lightseagreen;
+    text-decoration-thickness: 3px;
 }
 .menu.active {
     opacity: 1.0;
@@ -77,4 +78,10 @@ $active-bgc: #000;
     padding: 0;
     background-color: #7faadb;
     border: 2px solid #fff;
+}
+
+.svgtab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
