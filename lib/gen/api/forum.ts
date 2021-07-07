@@ -2,7 +2,7 @@ import fetch, { Response } from 'node-fetch'
 import { GameFromJSON } from '../models/Game';
 import { PostFromJSON } from '../models/Post';
 
-import { PostQuery } from '../../../components/postTab';
+import { PostQuery } from '../../../components/post';
 import { ModelErrorFromJSON } from '../models/ModelError';
 
 const responseParser = async (response: Response) => JSON.parse(await response.text())

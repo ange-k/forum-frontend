@@ -45,7 +45,6 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
 
   // サーチコンポーネントから実行される検索処理
   const search = ((query: SearchQuery) => {
-    console.log(query);
     try {
       // gameid
       let posts = gameToPosts.filter((m) => m.key === query.gameId)[0].posts

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { PostQuery } from '../../components/postTab';
+import { PostQuery } from '../../components/post';
 import { savePost } from '../../lib/gen/api/forum';
 
 type Data = {
