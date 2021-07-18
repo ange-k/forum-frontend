@@ -23,6 +23,7 @@ export interface PostQuery {
     comment: string,
     tags: string[],
     selfTags: string[],
+    playTime: string[],
     deleteKey: string,
     userData?: {
         ipAddr: string,
@@ -43,6 +44,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
         comment: '',
         tags: [],
         selfTags: [],
+        playTime: [],
         deleteKey: ''
     } as PostQuery)
 

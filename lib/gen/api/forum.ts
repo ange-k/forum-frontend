@@ -21,8 +21,20 @@ export async function findPosts(gameId: string) {
 }
 
 export const savePost = async(query: PostQuery) => {
+    // Tagsをオブジェクトに変換する
+    const postData = {
+        ...query,
+        tags: query.tags.map((t) => {
+            return { id: t }
+        }),
+        selfTags: query.selfTags.map((t) => { 
+            return { id: t }
+         }),
+    }
+    console.log(postData);
+
     const response: Response = await fetch(`http://localhost:8080/games/${query.gameId}/posts`, {
-        body: JSON.stringify(query),
+        body: JSON.stringify(postData),
         headers: {
             'Content-Type': 'application/json'
         },
