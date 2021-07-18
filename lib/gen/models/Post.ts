@@ -21,6 +21,13 @@ import {
     UserDataToJSON,
 } from './UserData';
 
+import {
+    Tags,
+    TagsFromJSON,
+    TagsFromJSONTyped,
+    TagsToJSON,
+} from './Tags'
+
 /**
  * ユーザ投稿モデル
  * @export
@@ -106,11 +113,23 @@ export interface Post {
      */
     deleteKey?: string;
     /**
+     * 相手に求めることを記載するタグ
+     * @type {Array<Tags>}
+     * @memberof Post
+     */
+    tags?: Array<Tags>;
+    /**
+     * 自分に当てはまることを記載するタグ
+     * @type {Array<Tags>}
+     * @memberof Post
+     */
+    selfTags?: Array<Tags>;
+    /**
      * 
      * @type {Array<string>}
      * @memberof Post
      */
-    tags?: Array<PostTagsEnum>;
+    playTime?: Array<PostPlayTimeEnum>;
 }
 
 /**
@@ -141,21 +160,21 @@ export enum PostVcUseEnum {
 * @export
 * @enum {string}
 */
-export enum PostTagsEnum {
-    PsEx = 'PS_EX',
-    PsJoy = 'PS_JOY',
-    PsEasy = 'PS_EASY',
-    TimeSociety = 'TIME_SOCIETY',
-    TimeStudent = 'TIME_STUDENT',
-    TimeShift = 'TIME_SHIFT',
-    TimeNightly = 'TIME_NIGHTLY',
-    TimeRandom = 'TIME_RANDOM',
-    Years10 = 'YEARS_10',
-    Years20 = 'YEARS_20',
-    YearsOv30 = 'YEARS_OV_30',
-    PlayEasy = 'PLAY_EASY',
-    PlayVeteran = 'PLAY_VETERAN',
-    PlayHero = 'PLAY_HERO'
+export enum PostPlayTimeEnum {
+    WeekdaysM = 'WEEKDAYS_M',
+    WeekdaysL = 'WEEKDAYS_L',
+    WeekdaysN = 'WEEKDAYS_N',
+    WeekdaysMn = 'WEEKDAYS_MN',
+    WeekdaysEm = 'WEEKDAYS_EM',
+    HolidaysEm = 'HOLIDAYS_EM',
+    HolidaysM = 'HOLIDAYS_M',
+    HolidaysL = 'HOLIDAYS_L',
+    HolidaysN = 'HOLIDAYS_N',
+    HolidaysMn = 'HOLIDAYS_MN',
+    BestEffort = 'BEST_EFFORT',
+    Random = 'RANDOM',
+    Weekdays = 'WEEKDAYS',
+    Holidays = 'HOLIDAYS'
 }
 
 export function PostFromJSON(json: any): Post {
@@ -181,7 +200,9 @@ export function PostFromJSONTyped(json: any, ignoreDiscriminator: boolean): Post
         'createdAt': !exists(json, 'createdAt') ? undefined : (dateFormat(new Date(json['createdAt']))),
         'userData': !exists(json, 'userData') ? undefined : UserDataFromJSON(json['userData']),
         'deleteKey': !exists(json, 'deleteKey') ? undefined : json['deleteKey'],
-        'tags': !exists(json, 'tags') ? undefined : json['tags'],
+        'tags': !exists(json, 'tags') ? undefined : ((json['tags'] as Array<any>).map(TagsFromJSON)),
+        'selfTags': !exists(json, 'selfTags') ? undefined : ((json['selfTags'] as Array<any>).map(TagsFromJSON)),
+        'playTime': !exists(json, 'playTime') ? undefined : json['playTime'],
     };
 }
 
@@ -207,7 +228,9 @@ export function PostToJSON(value?: Post | null): any {
         'createdAt': value.createdAt === undefined ? undefined : (value.createdAt),
         'userData': UserDataToJSON(value.userData),
         'deleteKey': value.deleteKey,
-        'tags': value.tags,
+        'tags': value.tags === undefined ? undefined : ((value.tags as Array<any>).map(TagsToJSON)),
+        'selfTags': value.selfTags === undefined ? undefined : ((value.selfTags as Array<any>).map(TagsToJSON)),
+        'playTime': value.playTime,
     };
 }
 

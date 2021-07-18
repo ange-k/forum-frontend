@@ -55,7 +55,7 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                 <div className={styles.tags}>
                     {
                         post.tags?.map((tag) => (
-                            <span key={tag}>{convertTags(tag)}</span>
+                            <span key={tag.id}>{convertTags(tag.id)}</span>
                         ))
                     }
                 </div>

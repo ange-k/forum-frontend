@@ -1,5 +1,6 @@
 import { Game } from "../gen/models/Game";
-import { PostPurposeEnum, PostTagsEnum, PostVcUseEnum } from "../gen/models/Post";
+import { PostPurposeEnum, PostVcUseEnum } from "../gen/models/Post";
+import { TagsIdEnum } from "../gen/models/Tags"
 
 export const dateFormat = ((date:Date) => {
     const jst = new Date(date.toLocaleString([], {timeZone:'Asia/Tokyo'}))
@@ -57,36 +58,36 @@ export const convertVcUse = (vc: PostVcUseEnum) => {
     }
 }
 
-export const convertTags = (tag: PostTagsEnum) => {
+export const convertTags = (tag: TagsIdEnum) => {
     switch(tag) {
-        case PostTagsEnum.PsEx:
+        case TagsIdEnum.PsEx:
             return "効率重視"
-        case PostTagsEnum.PsJoy:
+        case TagsIdEnum.PsJoy:
             return "バランス重視"
-        case PostTagsEnum.PsEasy:
+        case TagsIdEnum.PsEasy:
             return "楽しさ重視"
-        case PostTagsEnum.TimeSociety:
+        case TagsIdEnum.TimeSociety:
             return "社会人"
-        case PostTagsEnum.TimeStudent:
+        case TagsIdEnum.TimeStudent:
             return "学生"
-        case PostTagsEnum.TimeShift:
-            return "シフト勤務"
-        case PostTagsEnum.TimeNightly:
-            return "夜中心"
-        case PostTagsEnum.TimeRandom:
-            return "不定期ログイン"
-        case PostTagsEnum.Years10:
+        case TagsIdEnum.Years10:
             return "10歳代"
-        case PostTagsEnum.Years20:
+        case TagsIdEnum.Years20:
             return "20歳代"
-        case PostTagsEnum.YearsOv30:
+        case TagsIdEnum.YearsOv30:
             return "30歳代以上"
-        case PostTagsEnum.PlayEasy:
+        case TagsIdEnum.PlayEasy:
             return "初心者"
-        case PostTagsEnum.PlayVeteran:
+        case TagsIdEnum.PlayVeteran:
             return "中級者/復帰"
-        case PostTagsEnum.PlayHero:
+        case TagsIdEnum.PlayHero:
             return "ガチ勢"
+        case TagsIdEnum.JobAck:
+            return "アタッカー"
+        case TagsIdEnum.JobDef:
+            return "タンク"
+        case TagsIdEnum.JobHeal:
+            return "回復/支援"
         default:
             return "unknown"
     }
@@ -113,7 +114,7 @@ export const vcuses = () => {
 }
 
 export const tags = () => {
-    const enums = Object.entries(PostTagsEnum)
+    const enums = Object.entries(TagsIdEnum)
     return enums.map((k, v) => {
         return {
             key: k[1],
