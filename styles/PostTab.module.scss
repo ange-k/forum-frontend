@@ -1,3 +1,5 @@
+@import "./Input.module.scss";
+
 .container {
     display: flex;
     flex-direction: column;
@@ -12,40 +14,10 @@
     min-width: 400px;
 }
 
-.window input {
-    background-color:rgb(47,51,54);
-    color: rgb(217,217,217);
-
-    &:focus {
-        border: 1px solid #ff9900; 
-        z-index: 10;
-        outline: 0;
-    }
-}
-.window select {
-    background-color:rgb(47,51,54);
-    color: rgb(217,217,217);
-
-    &:focus {
-        border: 1px solid #ff9900; 
-        z-index: 10;
-        outline: 0;
-    }
-}
-.window textarea {
-    background-color:rgb(47,51,54);
-    color: rgb(217,217,217);
-
-    &:focus {
-        border: 1px solid #ff9900; 
-        z-index: 10;
-        outline: 0;
-    }
-}
-
 .item {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
 }
 .item input {
     width: 75%;
@@ -76,18 +48,44 @@
     width: 80%;
     height: 300px;
     max-width: 500px;
+    border: 1px solid rgb(217,217,217);
+}
+
+.btnarea {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+.subbtnarea {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .postbtn {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 1rem;
-
-    max-width: 620px;
+    background-color: #44b400;
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 16px;
+}
+.postbtn.disabled {
+    background-color: #225200;
+    color: $gray;
 }
 
-.hr {
-    background-color: rgb(47,51,54);
-    border: none;
-    height: 2px;
+.btnbase {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 96px;
+    overflow-wrap: unset;
+}
+
+.btnbase span {
+    padding-left: 2px;
+}
+
+// overwrite
+.inputbox input {
+    margin: 0;
 }

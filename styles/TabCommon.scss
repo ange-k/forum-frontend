@@ -9,9 +9,7 @@ $active-bgc: #000;
     color: #fff;
     padding: 1rem 0;
 }
-.window.invisible {
-    display: none;
-}
+
 .window .item {
     display: flex;
     justify-content: space-between;
@@ -51,19 +49,6 @@ $active-bgc: #000;
     .hr {
         display: none;
     }
-}
-
-.btnbase {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 24px;
-    width: 96px;
-    overflow-wrap: unset;
-}
-
-.btnbase span {
-    padding-left: 2px;
 }
 
 .tags {

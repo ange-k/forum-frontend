@@ -142,30 +142,35 @@ const PostPage:React.FC<postProps> = ({games}) => {
     const sendBtn = () => {
         if(queryValidation(query)) {
             return (
-                <button className={styles.btnbase} onClick={(e) => {
-                    e.preventDefault;
-                    if(queryValidation(query)) {
-                        postApi(query);
-                    }
-                }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                    <span>投稿</span>
-                </button>
+                <div className={styles.postbtn}>
+                    <button className={styles.btnbase} onClick={(e) => {
+                        e.preventDefault;
+                        if(queryValidation(query)) {
+                            postApi(query);
+                        }
+                    }}>
+                        <span>投稿</span>
+                    </button>
+                </div>
             )
         }
         return (
-            <button className={styles.btnbase} disabled={true}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                <span>投稿</span>
-            </button>
+            <div className={styles.subbtnarea}>
+                <div>入力項目のエラーを確認してください。</div>
+                <div className={styles.postbtn + " " + styles.disabled}>
+                    <button className={styles.btnbase} disabled={true}>
+                        <span>投稿</span>
+                    </button>
+                </div>
+            </div>
         )
     }
 
     return (
         <div className={styles.container}>
             <div className={styles.window}>
-                <div className={styles.item}>
-                    <label className={styles.label}>Game</label>
+                <div className={styles.selectbox}>
+                    <label className={styles.label}>ゲーム</label>
                     <select onChange={(e)=> setQuery({...query, gameId: e.target.value})}>
                         {
                             games.map((game) => (
@@ -174,8 +179,8 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         }
                     </select>
                 </div>
-                <div className={styles.item}>
-                    <label className={styles.label}>目的</label>
+                <div className={styles.selectbox}>
+                    <label className={styles.label}>募集の目的</label>
                     <select onChange={(e)=> setQuery({...query, purpose: e.target.value})}>
                         {
                             proposes().map((p) => (
@@ -184,7 +189,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         }
                     </select>
                 </div>
-                <div className={styles.item}>
+                <div className={styles.selectbox}>
                     <label className={styles.label}>ボイスチャット</label>
                     <select onChange={(e) => setQuery({...query, vcUse: e.target.value})}>
                         {
@@ -194,7 +199,6 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         }
                     </select>
                 </div>
-                <hr className={styles.hr}/>
 
                 <SelectTags title="タグ選択(相手に求めること)" selected={query.tags} 
                     selectTag={(tagId:string)=> {
@@ -203,7 +207,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                     deleteTag={(tagId:string)=> {
                         setQuery(query => ({...query, tags: query.tags.filter((t) => t !== tagId)}))
                     }}/>
-                <hr className={styles.hr}/>
+                
                 <SelectTags title="タグ選択(自分に当てはまること)" selected={query.selfTags} 
                     selectTag={(tagId:string)=> {
                         setQuery(query => ({...query, selfTags: [...query.selfTags, tagId]}))
@@ -211,7 +215,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                     deleteTag={(tagId:string)=> {
                         setQuery(query => ({...query, selfTags: query.selfTags.filter((t) => t !== tagId)}))
                     }}/>
-                <hr className={styles.hr}/>
+                
                 <SelectPlayTime title="主なプレイ時間帯" selected={query.playTime}
                     selectTag={(tagId:string)=> {
                         setQuery(query => ({...query, playTime: [...query.playTime, tagId]}))
@@ -220,8 +224,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         setQuery(query => ({...query, playTime: query.playTime.filter((t) => t !== tagId)}))
                     }}/>
 
-                <hr className={styles.hr}/>
-                <div className={styles.item}>
+                <div className={styles.inputbox}>
                     <span className={styles.label}>
                         {validateCheck(query.title, true, 20)}
                         <label>タイトル</label>
@@ -230,7 +233,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                     placeholder="この投稿のタイトルを記載"
                     maxLength={20} onChange={(e)=>setQuery({...query, title: e.target.value})}></input>
                 </div>
-                <div className={styles.item}>
+                <div className={styles.inputbox}>
                     <span className={styles.label}>
                         {validateCheck(query.server, false, 15)}
                         <label>サーバ</label>
@@ -239,7 +242,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                     placeholder="例:Asia/Ship2/Gaia"
                     maxLength={15} onChange={(e)=>setQuery({...query, server: e.target.value})}></input>
                 </div>
-                <div className={styles.item}>
+                <div className={styles.inputbox}>
                     <span className={styles.label}>
                         {validateCheck(query.playerName, true, 15)}
                         <label>名前</label>
@@ -248,7 +251,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                     placeholder="ニックネーム等"
                     maxLength={15} onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
                 </div>
-                <div className={styles.item}>
+                <div className={styles.inputbox}>
                     <span className={styles.label}>
                         {validateCheck(query.device, true, 15)}
                         <label>環境</label>
@@ -257,7 +260,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                     placeholder="例:PC,PS4,PS5,スマホ"
                     maxLength={15} onChange={(e)=>setQuery({...query, device: e.target.value})}></input>
                 </div>
-                <div className={styles.item}>
+                <div className={styles.inputbox}>
                     <span className={styles.label}>
                         {validateCheck(query.deleteKey, false, 15)}
                         <label>削除キー</label>
@@ -266,7 +269,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                     placeholder="投稿を後で消す際に使用"
                     maxLength={15} onChange={(e)=>setQuery({...query, deleteKey: e.target.value})}></input>
                 </div>
-                <hr className={styles.hr}/>
+                
                 <div className={styles.textarea}>
                     <span className={styles.titlebox + ' ' + styles.label}>
                         {validateCheck(query.comment, true, 300)}
@@ -278,8 +281,8 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         onChange={(e) => setQuery({...query, comment: e.target.value})}>
                     </textarea>
                 </div>
-                <hr className={styles.hr}/>
-                <div className={styles.postbtn}>
+                
+                <div className={styles.btnarea}>
                     {
                         sendBtn()
                     }

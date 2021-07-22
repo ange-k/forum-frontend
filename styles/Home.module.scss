@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  padding: 0 5rem;
+  margin: 0 5rem 0 calc(80px + 2rem);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -9,7 +9,12 @@
 
 @media (max-width: 1000px) {
   .container {
-    padding: 0 2.5rem;
+    margin: 0 2.5rem 0 calc(80px + 1rem);
+  }
+}
+@media (max-width: 600px) {
+  .container {
+    margin: 0 0 0 80px;
   }
 }
 

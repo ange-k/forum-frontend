@@ -76,7 +76,6 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
       }
       // playtime
       if(query.playTime) {
-        console.log(query.playTime)
         query.playTime.forEach((t) => {
           posts = posts.filter((post) => playTimeIncludes(post.playTime as PostPlayTimeEnum[], t as PostPlayTimeEnum))
         });

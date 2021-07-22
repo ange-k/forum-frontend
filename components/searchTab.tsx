@@ -6,53 +6,15 @@ import styles from '../styles/SearchTab.module.scss'
 import ReactTooltip from 'react-tooltip'
 import SelectTags from './selectTags';
 import SelectPlayTime from './selectPlayTimes';
+import { SearchQuery } from './window';
 
 type SearchProps = ({
     games: Game[],
-    windowActive: boolean,
-    windowVisble: boolean,
-    search: (query: SearchQuery) => void,
+    query: SearchQuery,
+    setQuery: (q:SearchQuery) => void
 })
 
-export interface SearchQuery {
-    gameId: string,
-    vcUse: string,
-    tags: string[],
-    selfTags: string[],
-    playTime: string[],
-    purpose?: string,
-    serverName?: string,
-    device?: string,
-    playerName?: string,
-}
-
-const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, search}) => {
-
-    // 親のStateを使って表示状態の変更
-    /**
-     * windowVisible=falseのとき、引数のclassNameに.invisibleを追加して返す
-     * windowActiveStatus=trueのとき、引数のclassNameに.activeを追加して返す
-     * @param className
-     * @returns className + .active
-     */
-    const setActiveStatus = (className: string) => {
-        if(windowVisble === false) {
-            return `${className} ${styles.invisible}`
-        }
-        if(windowActive === false) {
-            return className;
-        }
-        return `${className} ${styles.active}`
-    }
-
-    // Search実行時にわたすサーチクエリ
-    const [query, setQuery] = useState({
-        gameId: 'genshin',
-        vcUse: '',
-        tags: [],
-        selfTags: [],
-        playTime: [],
-    } as SearchQuery)
+const SearchTab:React.FC<SearchProps> = ({games, query, setQuery}) => {
 
     const [isTooltipVisible, setTooltipVisibility] = useState(false);
     React.useEffect(() => {
@@ -60,10 +22,10 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
       }, []);
 
     return (
-        <div className={setActiveStatus(styles.window)}>
-            <div className={styles.item}>
-                <label>Game</label>
-                <select onChange={(e)=> setQuery({...query, gameId: e.target.value})}>
+        <div className={styles.window}>
+            <div className={styles.selectbox}>
+                <label htmlFor="game">ゲーム</label>
+                <select name="game" onChange={(e)=> setQuery({...query, gameId: e.target.value})}>
                     {
                         games.sort((a,b) => {
                             if(a.idName<b.idName){
@@ -79,8 +41,8 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
                     }
                 </select>
             </div>
-            <div className={styles.item}>
-                <label>目的</label>
+            <div className={styles.selectbox}>
+                <label>募集の目的</label>
                 <select onChange={(e)=> setQuery({...query, purpose: e.target.value})}>
                     <option value="">未選択</option>
                     {
@@ -90,7 +52,8 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
                     }
                 </select>
             </div>
-            <div className={styles.item}>
+
+            <div className={styles.selectbox}>
                 <label>ボイスチャット</label>
                 <select onChange={(e) => setQuery({...query, vcUse: e.target.value})}>
                     <option value="">未選択</option>
@@ -101,31 +64,30 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
                     }
                 </select>
             </div>
-            <hr className={styles.hr}/>
+            
             <SelectTags title="タグ検索(相手に求めること)" selected={query.tags} 
                     selectTag={(tagId:string)=> {
-                        setQuery(query => ({...query, tags: [...query.tags, tagId]}))
+                        setQuery(({...query, tags: [...query.tags, tagId]}))
                     }}
                     deleteTag={(tagId:string)=> {
-                        setQuery(query => ({...query, tags: query.tags.filter((t) => t !== tagId)}))
+                        setQuery(({...query, tags: query.tags.filter((t) => t !== tagId)}))
                     }}/>
             <SelectTags title="タグ選択(自分に当てはまること)" selected={query.selfTags} 
                 selectTag={(tagId:string)=> {
-                    setQuery(query => ({...query, selfTags: [...query.selfTags, tagId]}))
+                    setQuery(({...query, selfTags: [...query.selfTags, tagId]}))
                 }}
                 deleteTag={(tagId:string)=> {
-                    setQuery(query => ({...query, selfTags: query.selfTags.filter((t) => t !== tagId)}))
+                    setQuery(({...query, selfTags: query.selfTags.filter((t) => t !== tagId)}))
                 }}/>
-                <hr className={styles.hr}/>
+                
             <SelectPlayTime title="主なプレイ時間帯" selected={query.playTime}
                 selectTag={(tagId:string)=> {
-                    setQuery(query => ({...query, playTime: [...query.playTime, tagId]}))
+                    setQuery(({...query, playTime: [...query.playTime, tagId]}))
                 }}
                 deleteTag={(tagId:string)=> {
-                    setQuery(query => ({...query, playTime: query.playTime.filter((t) => t !== tagId)}))
+                    setQuery(({...query, playTime: query.playTime.filter((t) => t !== tagId)}))
                 }}/>
             
-            <hr className={styles.hr}/>
             <span className={styles.label}>
                 <div className={styles.icon} data-multiline="true" data-tip="入力した値をすべて含む<br/>投稿を検索できます。">
                 { isTooltipVisible && <ReactTooltip effect="float" type="info"/> }
@@ -133,27 +95,22 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
                     <span>フリーワード検索</span>
                 </div>
             </span>
-            <div className={styles.item}>
-                <label>サーバ</label>
-                <input onChange={(e)=>setQuery({...query, serverName: e.target.value})}></input>
-            </div>
-            <div className={styles.item}>
-                <label>名前</label>
-                <input onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
-            </div>
-            <div className={styles.item}>
-                <label>環境</label>
-                <input onChange={(e)=>setQuery({...query, device: e.target.value})}></input>
-            </div>
-            <hr className={styles.hr}/>
-            <div className={styles.searchbtn}>
-                <button className={styles.btnbase} onClick={(e) => {
-                    e.preventDefault;
-                    search(query);
-                }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                    <span>検索</span>
-                </button>
+            <div className={styles.freeArea}>
+                <div className={styles.inputbox}>
+                    <label>サーバ</label>
+                    <input placeholder="ゲームサーバーの名前" 
+                        onChange={(e)=>setQuery({...query, serverName: e.target.value})}></input>
+                </div>
+                <div className={styles.inputbox}>
+                    <label>名前</label>
+                    <input placeholder="書き込んだ人の名前" 
+                        onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
+                </div>
+                <div className={styles.inputbox}>
+                    <label>環境</label>
+                    <input placeholder="PC/PS5など、遊ぶ環境" 
+                        onChange={(e)=>setQuery({...query, device: e.target.value})}></input>
+                </div>
             </div>
         </div>
     )

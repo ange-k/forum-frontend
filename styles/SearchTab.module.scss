@@ -1,7 +1,28 @@
-@import './TabCommon.scss';
+@import "./Input.module.scss";
 
-.searchbtn {
+.window {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+
+    flex-shrink: 1;
+    flex-grow: 1;
+    position: relative;
+    z-index: auto;
+    overflow: auto;
+}
+
+.item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-grow: 1;
+}
+.item label {
+    background-color: $white-line;
+    color: $dark-line;
     padding-right: 1rem;
+}
+
+.freeArea {
+    margin-left: 1rem;
 }

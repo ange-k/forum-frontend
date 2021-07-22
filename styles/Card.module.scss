@@ -8,6 +8,11 @@
     margin-bottom: 1rem;
     margin: 0.25rem 0.5rem;
 }
+@media (max-width: 600px) {
+    .container {
+      width: 320px;
+    }
+  }
 $inactive-bgc: #666;
 $active-bgc: #000;
 

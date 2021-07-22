@@ -1,0 +1,56 @@
+$bgc: #000;
+$dark-line: rgb(47,51,54); 
+$white-line: rgb(217,217,217);
+$gray: rgb(110, 118, 125);
+$label: 13px;
+$input: 17px;
+
+@mixin base() {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    align-items: stretch;
+    background-color: $bgc;
+    border: 1px solid $dark-line;
+    border-radius: 4px;
+    margin: 12px 0;
+    margin-right: 8px;
+}
+@mixin label-base() {
+    position: absolute;
+    padding: 0 8px;
+    display: inline;
+    margin: 0;
+    font-size: $label;
+
+    color: $gray;
+}
+@mixin input-base {
+    padding: 12px 8px 8px 8px;
+    margin: 16px 8px 0 0;
+    font-size: $input;
+    background-color: rgba($color: #000000, $alpha: 0);
+    cursor: pointer;
+    outline-style: none;
+}
+
+.selectbox {
+    @include base();
+}
+.selectbox label {
+    @include label-base();
+}
+.selectbox select {
+    @include input-base()
+}
+
+.inputbox {
+    @include base();
+}
+.inputbox label {
+    @include label-base();
+}
+.inputbox input {
+    @include input-base()
+}

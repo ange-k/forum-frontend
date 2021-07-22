@@ -1,18 +1,11 @@
+@import "./Input.module.scss";
+
 .item {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
 }
-.label {
-    width: 120px;
-}
-.taglabel {
-    width: 270px;
-}
-.taglabel span{
-    width: 100%;
-    padding-left: 4px;
-    padding-right: 4px;
-}
+
 .hr {
     background-color: rgb(47,51,54);
     border: none;
@@ -41,4 +34,8 @@
     font-size: 0.75rem;
 
     cursor: pointer;
+}
+// overwrite
+.selectbox select {
+    margin: 0;
 }

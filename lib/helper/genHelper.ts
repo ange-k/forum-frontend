@@ -33,11 +33,11 @@ export const convertPropose = (purpose: PostPurposeEnum) => {
         case PostPurposeEnum.Play:
             return "一緒に遊びたい"
         case PostPurposeEnum.TeamJoin:
-            return "ギルド/チーム等に入りたい"
+            return "メンバーになりたい"
         case PostPurposeEnum.TeamLanch:
-            return "ギルド/チーム等の立ち上げメンバー募集"
+            return "立ち上げメンバー募集"
         case PostPurposeEnum.TeamScout:
-            return "ギルド/チーム等メンバー募集"
+            return "メンバー募集"
         case PostPurposeEnum.Trade:
             return "アイテム取引"
         case PostPurposeEnum.Other:
