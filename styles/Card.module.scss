@@ -3,7 +3,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    width: 320px;
+    width: 400px;
     border: 1px solid #000;
     margin-bottom: 1rem;
     margin: 0.25rem 0.5rem;
@@ -48,11 +48,11 @@ $active-bgc: #000;
 }
 
 .item label {
-    width: 25%;
+    width: 30%;
     font-size: 1.1rem;
 }
 .item div {
-    width: 75%;
+    width: 70%;
     padding-left: 1rem;
     background-color: #ddd;
     overflow-wrap: break-word;    
@@ -62,13 +62,14 @@ $active-bgc: #000;
     overflow-wrap: break-word;
     background-color: #eee;
     height: 100%;
+    min-height: 100px;
 }
 
 .textarea pre {
     margin: 0;
     white-space: pre-wrap ;
     overflow-y: auto;
-    max-height: 10em;
+    max-height: 17em;
     background-color: #fefefe;
     font-family: 'Kosugi Maru', 'Helvetica Neue', sans-serif;
     font-size: 0.85rem;

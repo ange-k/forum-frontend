@@ -7,6 +7,7 @@ import styles from '../styles/PostTab.module.scss'
 import ReactTooltip from 'react-tooltip'
 import React from 'react';
 import SelectTags from './selectTags';
+import SelectPlayTime from './selectPlayTimes';
 
 type postProps = ({
     games: Game[],
@@ -209,6 +210,14 @@ const PostPage:React.FC<postProps> = ({games}) => {
                     }}
                     deleteTag={(tagId:string)=> {
                         setQuery(query => ({...query, selfTags: query.selfTags.filter((t) => t !== tagId)}))
+                    }}/>
+                <hr className={styles.hr}/>
+                <SelectPlayTime title="主なプレイ時間帯" selected={query.playTime}
+                    selectTag={(tagId:string)=> {
+                        setQuery(query => ({...query, playTime: [...query.playTime, tagId]}))
+                    }}
+                    deleteTag={(tagId:string)=> {
+                        setQuery(query => ({...query, playTime: query.playTime.filter((t) => t !== tagId)}))
                     }}/>
 
                 <hr className={styles.hr}/>

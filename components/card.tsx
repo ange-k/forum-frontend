@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Post } from '../lib/gen/models/Post';
-import { convertPropose, convertTags, convertVcUse } from '../lib/helper/genHelper';
+import { convertPlayTime, convertPropose, convertTags, convertVcUse } from '../lib/helper/genHelper';
 import styles from '../styles/Card.module.scss'
 
 type CardProps = ({
@@ -50,6 +50,16 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                 <div className={styles.item}>
                     <label>VC</label>
                     <div>{convertVcUse(post.vcUse)}</div>
+                </div>
+                <div className={styles.item}>
+                    <label>プレイ時間</label>
+                    <div className={styles.tags}>
+                        {
+                            post.playTime?.map((id) => (
+                                <span key={id}>{convertPlayTime(id)}</span>
+                            ))
+                        }
+                    </div>
                 </div>
                 <hr/>
                 <div>

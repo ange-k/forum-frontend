@@ -105,7 +105,7 @@ export const convertPlayTime = (time : PostPlayTimeEnum) => {
             return "平日/夜"
         case PostPlayTimeEnum.WeekdaysMn:
             return "平日/深夜"
-        case PostPlayTimeEnum.WeekdaysM:
+        case PostPlayTimeEnum.Weekdays:
             return "平日"
         case PostPlayTimeEnum.HolidaysEm:
             return "休日/早朝"
