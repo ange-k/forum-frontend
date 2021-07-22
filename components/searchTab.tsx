@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Game } from '../lib/gen/models/Game';
-import { PostPurposeEnum, PostVcUseEnum } from '../lib/gen/models/Post';
-import { convertPropose, convertTags, convertVcUse, proposes, tags, vcuses } from '../lib/helper/genHelper';
+import { proposes, vcuses } from '../lib/helper/genHelper';
 import styles from '../styles/SearchTab.module.scss'
 
 import ReactTooltip from 'react-tooltip'
-import { TagsIdEnum } from '../lib/gen/models/Tags';
 import SelectTags from './selectTags';
+import SelectPlayTime from './selectPlayTimes';
 
 type SearchProps = ({
     games: Game[],
@@ -19,6 +18,8 @@ export interface SearchQuery {
     gameId: string,
     vcUse: string,
     tags: string[],
+    selfTags: string[],
+    playTime: string[],
     purpose?: string,
     serverName?: string,
     device?: string,
@@ -49,19 +50,9 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
         gameId: 'genshin',
         vcUse: '',
         tags: [],
+        selfTags: [],
+        playTime: [],
     } as SearchQuery)
-
-    // 検索タグの設定
-    const tagSelect = ((tagId:string) => {
-        const include = query.tags?.includes(tagId)
-        if(!include) {
-            setQuery(query => ({...query, tags: [...query.tags, tagId]}))
-            return
-        }
-    })
-    const tagDelete = ((tagId:string) => {
-        setQuery(query => ({...query, tags: query.tags.filter((t) => t !== tagId)}))
-    })
 
     const [isTooltipVisible, setTooltipVisibility] = useState(false);
     React.useEffect(() => {
@@ -118,6 +109,21 @@ const SearchTab:React.FC<SearchProps> = ({games, windowActive, windowVisble, sea
                     deleteTag={(tagId:string)=> {
                         setQuery(query => ({...query, tags: query.tags.filter((t) => t !== tagId)}))
                     }}/>
+            <SelectTags title="タグ選択(自分に当てはまること)" selected={query.selfTags} 
+                selectTag={(tagId:string)=> {
+                    setQuery(query => ({...query, selfTags: [...query.selfTags, tagId]}))
+                }}
+                deleteTag={(tagId:string)=> {
+                    setQuery(query => ({...query, selfTags: query.selfTags.filter((t) => t !== tagId)}))
+                }}/>
+                <hr className={styles.hr}/>
+            <SelectPlayTime title="主なプレイ時間帯" selected={query.playTime}
+                selectTag={(tagId:string)=> {
+                    setQuery(query => ({...query, playTime: [...query.playTime, tagId]}))
+                }}
+                deleteTag={(tagId:string)=> {
+                    setQuery(query => ({...query, playTime: query.playTime.filter((t) => t !== tagId)}))
+                }}/>
             
             <hr className={styles.hr}/>
             <span className={styles.label}>

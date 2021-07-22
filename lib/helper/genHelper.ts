@@ -128,6 +128,17 @@ export const convertPlayTime = (time : PostPlayTimeEnum) => {
     }
 }
 
+export const playTimeIncludes = (target: PostPlayTimeEnum[], playTime: PostPlayTimeEnum):boolean => {
+    switch(playTime){
+        case PostPlayTimeEnum.Holidays:
+            return target.filter((p) => p.valueOf().indexOf("HOLIDAYS") > -1).length > 0;
+        case PostPlayTimeEnum.Weekdays:
+            return target.filter((p) => p.valueOf().indexOf("WEEKDAYS") > -1).length > 0;
+        default:
+            return target.includes(playTime);
+    }
+}
+
 export const proposes = () => {
     const enums = Object.entries(PostPurposeEnum)
     return enums.map((k, v) => {

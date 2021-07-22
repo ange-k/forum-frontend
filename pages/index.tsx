@@ -7,12 +7,13 @@ import Card from '../components/card'
 import {getGames, findPosts} from '../lib/gen/api/forum'
 import { Game } from '../lib/gen/models/Game'
 import { InferGetServerSidePropsType } from 'next'
-import { Post, PostTagsEnum } from '../lib/gen/models/Post'
+import { Post, PostPlayTimeEnum } from '../lib/gen/models/Post'
 import GameToPosts from '../lib/helper/GameToPosts'
 
 import React, { useState } from 'react';
-import { getGameName } from '../lib/helper/genHelper'
+import { getGameName, playTimeIncludes } from '../lib/helper/genHelper'
 import { SearchQuery } from '../components/searchTab'
+import { TagsIdEnum } from '../lib/gen/models/Tags'
 
 export const getServerSideProps = async () => {
   const games:Game[] = await getGames()
@@ -56,6 +57,7 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
       if(query.vcUse) {
         posts = posts.filter((m) => m.vcUse === query.vcUse)
       }
+      // サーバ
       if(query.serverName) {
         posts = posts.filter((m) => {
           if(!m.server) {
@@ -64,18 +66,33 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
           return m.server.indexOf(query.serverName!) !== -1
         })
       }
+      // player name
       if(query.playerName) {
         posts = posts.filter((m) => m.playerName.indexOf(query.serverName!) !== -1)
       }
+      //device
       if(query.device) {
         posts = posts.filter((m) => m.device.indexOf(query.device!) !== -1)
       }
+      // playtime
+      if(query.playTime) {
+        console.log(query.playTime)
+        query.playTime.forEach((t) => {
+          posts = posts.filter((post) => playTimeIncludes(post.playTime as PostPlayTimeEnum[], t as PostPlayTimeEnum))
+        });
+      }  
       // Tag
       if(query.tags) {
         query.tags.forEach((t) => {
-          posts = posts.filter((m) => m.tags?.includes(t as PostTagsEnum))
+          posts = posts.filter((post) => post.tags?.map((tag) => tag.id).includes(t as TagsIdEnum))
         })
-      }      
+      }
+      // selfTag
+      if(query.selfTags) {
+        query.selfTags.forEach((t) => {
+          posts = posts.filter((post) => post.selfTags?.map((tag) => tag.id).includes(t as TagsIdEnum))
+        })
+      }  
       setViewPosts(posts)
     } catch(error) {
       console.error(error);
