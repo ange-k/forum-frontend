@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Game } from '../lib/gen/models/Game';
 import { PostPurposeEnum, PostVcUseEnum } from '../lib/gen/models/Post';
-import { proposes, vcuses } from '../lib/helper/genHelper';
+import { proposes, vcuses, playTimes } from '../lib/helper/genHelper';
 import styles from '../styles/PostTab.module.scss'
 
 import ReactTooltip from 'react-tooltip'

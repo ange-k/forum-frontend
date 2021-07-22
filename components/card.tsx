@@ -52,9 +52,23 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                     <div>{convertVcUse(post.vcUse)}</div>
                 </div>
                 <hr/>
+                <div>
+                    <label>相手に求めること</label>
+                </div>
                 <div className={styles.tags}>
                     {
                         post.tags?.map((tag) => (
+                            <span key={tag.id}>{convertTags(tag.id)}</span>
+                        ))
+                    }
+                </div>
+                <hr/>
+                <div>
+                    <label>自分に当てはまること</label>
+                </div>
+                <div className={styles.tags}>
+                    {
+                        post.selfTags?.map((tag) => (
                             <span key={tag.id}>{convertTags(tag.id)}</span>
                         ))
                     }

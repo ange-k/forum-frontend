@@ -1,5 +1,5 @@
 import { Game } from "../gen/models/Game";
-import { PostPurposeEnum, PostVcUseEnum } from "../gen/models/Post";
+import { PostPlayTimeEnum, PostPurposeEnum, PostVcUseEnum } from "../gen/models/Post";
 import { TagsIdEnum } from "../gen/models/Tags"
 
 export const dateFormat = ((date:Date) => {
@@ -93,6 +93,41 @@ export const convertTags = (tag: TagsIdEnum) => {
     }
 }
 
+export const convertPlayTime = (time : PostPlayTimeEnum) => {
+    switch(time) {
+        case PostPlayTimeEnum.WeekdaysEm:
+            return "平日/早朝"
+        case PostPlayTimeEnum.WeekdaysM:
+            return "平日/朝"
+        case PostPlayTimeEnum.WeekdaysL:
+            return "平日/昼"
+        case PostPlayTimeEnum.WeekdaysN:
+            return "平日/夜"
+        case PostPlayTimeEnum.WeekdaysMn:
+            return "平日/深夜"
+        case PostPlayTimeEnum.WeekdaysM:
+            return "平日"
+        case PostPlayTimeEnum.HolidaysEm:
+            return "休日/早朝"
+        case PostPlayTimeEnum.HolidaysM:
+            return "休日/朝"
+        case PostPlayTimeEnum.HolidaysL:
+            return "休日/昼"
+        case PostPlayTimeEnum.HolidaysN:
+            return "休日/夜"
+        case PostPlayTimeEnum.HolidaysMn:
+            return "休日/深夜"
+        case PostPlayTimeEnum.Holidays:
+            return "休日"
+        case PostPlayTimeEnum.Random:
+            return "不定期"
+        case PostPlayTimeEnum.BestEffort:
+            return "可能な範囲でいつでも"
+        default:
+            return "unknown"
+    }
+}
+
 export const proposes = () => {
     const enums = Object.entries(PostPurposeEnum)
     return enums.map((k, v) => {
@@ -119,6 +154,16 @@ export const tags = () => {
         return {
             key: k[1],
             value: convertTags(k[1])
+        }
+    })
+}
+
+export const playTimes = () => {
+    const enums = Object.entries(PostPlayTimeEnum)
+    return enums.map((k, v) => {
+        return {
+            key: k[1],
+            value: convertPlayTime(k[1])
         }
     })
 }
