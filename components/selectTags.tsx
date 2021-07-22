@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-//import styles from '../styles/SelectTags.module.scss'
-import styles from '../styles/PostTab.module.scss'
+import styles from '../styles/SelectTags.module.scss'
 import ReactTooltip from 'react-tooltip'
 
 import { convertTags, tags } from '../lib/helper/genHelper';
