@@ -17,7 +17,16 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  flex: 1;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 90%;
+}
+
+@media (max-width: 600px) {
+  .main {
+    justify-content: inherit;
+    align-items: inherit;
+  }
 }
 
 .footer {

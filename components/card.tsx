@@ -36,6 +36,12 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                     <div>{post.createdAt}</div>
                 </div>
             </div>
+            <div className={styles.nameinfo}>
+                <div className={styles.item}>
+                    <label>Name</label>
+                    <div>{post.playerName}</div>
+                </div>
+            </div>
             <div className={styles.information}>
                 <div className={styles.gameinfo}>
                     <div className={styles.item}>
@@ -46,11 +52,6 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                     <div className={styles.item}>
                         <label>サーバー</label>
                         <div>{post.server ? post.server : "未記入"}</div>
-                    </div>
-
-                    <div className={styles.item}>
-                        <label>Name</label>
-                        <div>{post.playerName}</div>
                     </div>
 
                     <div className={styles.item}>

@@ -13,25 +13,32 @@ $input: 17px;
     justify-content: center;
     align-items: center;
     width: 80%;
+    max-width: 700px;
     border: 1px solid $white-line;
     margin-bottom: 1rem;
 
     background-color: black;
     padding: 0.5rem 0.25rem;
     border-radius: 16px;
+    box-sizing : border-box;
+}
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+    }
 }
 
 .title {
-    width: 80%;
+    width: 70%;
     background-color: $bgc;
     color: $white-line;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     padding: 0.25rem 1rem;
-
 }
 
 .title div {
-    overflow-wrap: break-word; 
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 .information {
@@ -57,10 +64,12 @@ $input: 17px;
     color: $gray;
 }
 @mixin base-text {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     color: $white-line;
     text-indent: 0.5rem;
     margin-top: 4px;
+    white-space: normal;
+    word-wrap: break-word;
 }
 .metainfo {
     @include base-window();
@@ -73,6 +82,18 @@ $input: 17px;
 .metainfo .item div {
     @include base-text();
     font-size: 0.8rem;
+}
+
+.nameinfo {
+    @include base-window();
+    width: 100%;
+    margin: 0;
+}
+.nameinfo .item label {
+    @include base-label();
+}
+.nameinfo .item div {
+    @include base-text();
 }
 
 .gameinfo {
