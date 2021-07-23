@@ -42,7 +42,7 @@ $input: 17px;
     @include label-base();
 }
 .selectbox select {
-    @include input-base()
+    @include input-base();
 }
 
 .inputbox {

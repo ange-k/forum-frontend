@@ -180,6 +180,11 @@ const PostPage:React.FC<postProps> = ({games}) => {
                 </div>
             </div>
             <div className={styles.window}>
+                <div className={styles.description}>
+                    <p>
+                        それぞれの項目を入力してください。
+                    </p>
+                </div>
                 <div className={styles.selectbox}>
                     <label className={styles.label}>ゲーム</label>
                     <select onChange={(e)=> setQuery({...query, gameId: e.target.value})}>
@@ -237,12 +242,12 @@ const PostPage:React.FC<postProps> = ({games}) => {
 
                 <div className={styles.inputbox}>
                     <span className={styles.label}>
-                        {validateCheck(query.title, true, 20)}
+                        {validateCheck(query.title, true, 30)}
                         <label>タイトル</label>
                     </span>
                     <input 
                     placeholder="この投稿のタイトルを記載"
-                    maxLength={20} onChange={(e)=>setQuery({...query, title: e.target.value})}></input>
+                    maxLength={30} onChange={(e)=>setQuery({...query, title: e.target.value})}></input>
                 </div>
                 <div className={styles.inputbox}>
                     <span className={styles.label}>

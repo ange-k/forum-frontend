@@ -36,7 +36,7 @@ $input: 17px;
     padding: 0.25rem 1rem;
 }
 
-.title div {
+.title h2 {
     white-space: normal;
     word-wrap: break-word;
 }
@@ -164,6 +164,8 @@ $input: 17px;
 .postinfo p {
     white-space: normal;
     word-wrap: break-word;
+    font-size: 1rem;
+    padding: 0.1rem 0.2rem;
 }
 
 .deletebtn .icon {
