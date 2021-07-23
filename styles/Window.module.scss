@@ -87,6 +87,11 @@ $white-line: rgb(217,217,217);
     display: flex;
     flex-direction: column;
 }
+@media (max-width: 600px) {
+    .modal {
+      max-width: 320px;
+    }
+  }
 
 .svgtab {
     font-size: 17px;
