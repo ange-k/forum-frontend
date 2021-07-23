@@ -29,7 +29,7 @@ $input: 17px;
 }
 
 .title {
-    width: 70%;
+    width: 100%;
     background-color: $bgc;
     color: $white-line;
     font-size: 1.1rem;
@@ -73,8 +73,12 @@ $input: 17px;
 }
 .metainfo {
     @include base-window();
-    flex-direction: row;
     width: 100%;
+}
+.metainfo .item {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 .metainfo .item label {
     @include base-label();

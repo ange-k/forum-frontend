@@ -32,7 +32,7 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                     <div>{post.title}</div>
                 </div>
                 <div className={styles.item}>
-                    <label>投稿日時</label>
+                    <label>投稿日時:</label>
                     <div>{post.createdAt}</div>
                 </div>
             </div>
