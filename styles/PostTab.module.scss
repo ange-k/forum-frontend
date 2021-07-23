@@ -1,17 +1,18 @@
 @import "./Input.module.scss";
+@import "./Sidebar.module.scss";
 
 .container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
+    flex-direction: row;
     color: rgb(217,217,217);
+    width: 100%;
+    box-sizing : border-box;
+    align-items: stretch;
 }
 
 .window {
     width: 75%;
-    min-width: 100%;
+    margin-left: 1rem;
 }
 
 .item {
@@ -40,10 +41,13 @@
 .textarea {
     display: flex;
     flex: 1;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
 }
-
+.textarea label {
+    font-size: $label;
+    color: $gray;
+}
 .textarea textarea {
     width: 80%;
     height: 300px;

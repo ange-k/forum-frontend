@@ -66,7 +66,7 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                             <div>{convertPropose(post.purpose)}</div>
                         </div>
                         <div className={styles.item}>
-                            <label>相手に求めること</label>
+                            <label>求めること</label>
                         </div>
                         <div className={styles.tags}>
                             {
@@ -90,7 +90,7 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                         </div>
 
                         <div className={styles.item}>
-                           <label>自分に当てはまること</label>
+                           <label>投稿者の属性</label>
                         </div>
                         <div className={styles.tags}>
                             {
