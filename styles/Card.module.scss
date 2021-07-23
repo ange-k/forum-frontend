@@ -154,6 +154,8 @@ $input: 17px;
 }
 .postinfo .textarea div {
     @include base-text();
+    max-height: 300px;
+    overflow-y: auto;
 }
 .postinfo p {
     white-space: normal;
