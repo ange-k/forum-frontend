@@ -101,13 +101,14 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
       <Head>
           <title>Create Next App</title> 
       </Head>
-      <Window games={games} search={search}/>
-      <main className={styles.main}>
-        {viewPosts.map(post => (
-            <Card key={post.uuid} gameName={getGameName(games, post.gameId)} post={post}/>
-        ))}
-      </main>
-
+      <div className={styles.contents}>
+        <Window games={games} search={search}/>
+        <main className={styles.main}>
+          {viewPosts.map(post => (
+              <Card key={post.uuid} gameName={getGameName(games, post.gameId)} post={post}/>
+          ))}
+        </main>
+      </div>
       <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
