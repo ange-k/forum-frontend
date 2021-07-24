@@ -26,7 +26,7 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} id={post.uuid}>
             <div className={styles.metainfo}>
                 <div className={styles.title}>
                     <h2>{post.title}</h2>
