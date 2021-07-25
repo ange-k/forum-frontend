@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 
 import Window, { SearchQuery } from '../components/window'
@@ -13,6 +12,7 @@ import GameToPosts from '../lib/helper/GameToPosts'
 import React, { useState } from 'react';
 import { getGameName, playTimeIncludes } from '../lib/helper/genHelper'
 import { TagsIdEnum } from '../lib/gen/models/Tags'
+import Footer from '../components/footer'
 
 export const getStaticProps = async () => {
   const games:Game[] = await getGames()
@@ -112,18 +112,7 @@ export default function Home({ games, gameToPosts, updateTime }:InferGetStaticPr
           ))}
         </main>
       </div>
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      <Footer></Footer>
     </div>
   )
 }

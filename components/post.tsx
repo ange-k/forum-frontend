@@ -8,6 +8,7 @@ import ReactTooltip from 'react-tooltip'
 import React from 'react';
 import SelectTags from './selectTags';
 import SelectPlayTime from './selectPlayTimes';
+import Footer from './footer';
 
 type postProps = ({
     games: Game[],
@@ -303,6 +304,8 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         sendBtn()
                     }
                 </div>   
+            <Footer></Footer>
+
             </div>
         </div>
     )
