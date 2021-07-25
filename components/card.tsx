@@ -11,6 +11,8 @@ type CardProps = ({
 const Card:React.FC<CardProps> = ({gameName, post}) => {
     const [miniFormVisible, setMiniFormVisible] = useState(false);
 
+    const [deleteKey, setDeleteKey] = useState("");
+
     const setVisibleClass = ((className: string) => {
         if(miniFormVisible) {
             return `${className} ${styles.visible}`;
@@ -122,19 +124,32 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                     </div>
                     <div>
                         <div className={setVisibleClass(styles.miniform)}>
-                            <div className={styles.flex}>
+                            <form className={styles.flex}
+                                onSubmit={(e)=>{
+                                    e.preventDefault();
+                                    const uuid = post.uuid;
+                                    const request = {
+                                        deleteKey: deleteKey,
+                                        gameId: post.gameId,
+                                        writeDay: post.writeDay
+                                    }
+                                    debugger;
+                                }
+                                }>
                                 <div className={styles.form}>
                                     <label>削除キー</label>
                                     <input 
+                                        onChange={(e)=>{setDeleteKey(e.target.value)}}
                                         maxLength={15}
-                                        placeholder="削除キーを入力"></input>
+                                        placeholder="削除キーを入力">
+                                    </input>
                                 </div>
                                 <div className={styles.deletesend}>
                                     <button className={styles.btnbase}>
                                         <span>削除</span>
                                     </button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                         <div className={styles.deletebtn}>
                             <button className={styles.icon} 

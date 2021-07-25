@@ -50,3 +50,28 @@ export const savePost = async(query: PostQuery) => {
     return (await responseParser(response)).map((o:Map<string, string>) => ModelErrorFromJSON(o))
 
 }
+
+export interface PostDeleteRequest {
+    deleteKey: string,
+    gameId: string,
+    writeDay: string
+}
+
+export const postDelete = async (request:PostDeleteRequest, uuid:string) => {
+    console.log(request);
+    const response: Response = await fetch(`http://localhost:8080/posts/${uuid}`, {
+        body: JSON.stringify(request),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'DELETE'
+    });
+    if(response.ok) {
+        return {
+            code: 200,
+            message: 'success'
+        }
+    }
+    console.error()
+    return (await responseParser(response)).map((o:Map<string, string>) => ModelErrorFromJSON(o))
+}

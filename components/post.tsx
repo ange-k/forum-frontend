@@ -144,7 +144,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
             return (
                 <div className={styles.postbtn}>
                     <button className={styles.btnbase} onClick={(e) => {
-                        e.preventDefault;
+                        e.preventDefault();
                         if(queryValidation(query)) {
                             postApi(query);
                         }

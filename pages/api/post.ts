@@ -3,7 +3,8 @@ import { PostQuery } from '../../components/post';
 import { savePost } from '../../lib/gen/api/forum';
 
 type Data = {
-  name: string
+  code: number,
+  message: string
 }
 
 export default function handler(
@@ -25,7 +26,7 @@ export default function handler(
     console.log(body);
     savePost(body).then((response) => {
       console.log(response);
-      res.status(200).json({ name: 'John Doe' })
+      res.status(200)
     }).catch((e) => {
       res.status(500);
       console.error(e);
