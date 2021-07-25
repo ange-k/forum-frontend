@@ -3,9 +3,13 @@ import { GameFromJSON } from '../models/Game';
 import { PostFromJSON } from '../models/Post';
 
 import { PostQuery } from '../../../components/post';
-import { ModelErrorFromJSON } from '../models/ModelError';
 
 const responseParser = async (response: Response) => JSON.parse(await response.text())
+
+export type ResponseData = {
+    code: string,
+    message: string
+  }
 
 export async function getGames() {
     const response: Response = await fetch('http://localhost:8080/games', {});
@@ -20,7 +24,7 @@ export async function findPosts(gameId: string) {
     return (await responseParser(response)).map((o:Map<string, string>) => PostFromJSON(o))
 }
 
-export const savePost = async(query: PostQuery) => {
+export const savePost = async(query: PostQuery):Promise<ResponseData> => {
     // Tagsをオブジェクトに変換する
     const postData = {
         ...query,
@@ -32,46 +36,59 @@ export const savePost = async(query: PostQuery) => {
          }),
     }
     console.log(postData);
-
-    const response: Response = await fetch(`http://localhost:8080/games/${query.gameId}/posts`, {
-        body: JSON.stringify(postData),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST'
-    });
-    if(response.ok) {
+    try{
+        const response: Response = await fetch(`http://localhost:8080/games/${query.gameId}/posts`, {
+            body: JSON.stringify(postData),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        });
+        if(response.ok) {
+            return {
+                code: "OK",
+                message: 'success'
+            }
+        }
+        return await response.json();
+    }catch (error) {
+        console.error(error)
         return {
-            code: 200,
-            message: 'success'
+            code: "NG",
+            message: "error"
         }
     }
-    console.error()
-    return (await responseParser(response)).map((o:Map<string, string>) => ModelErrorFromJSON(o))
-
 }
 
 export interface PostDeleteRequest {
     deleteKey: string,
     gameId: string,
-    writeDay: string
+    writeDay: string,
 }
 
-export const postDelete = async (request:PostDeleteRequest, uuid:string) => {
-    console.log(request);
-    const response: Response = await fetch(`http://localhost:8080/posts/${uuid}`, {
-        body: JSON.stringify(request),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'DELETE'
-    });
-    if(response.ok) {
+export const postDelete = async (request:PostDeleteRequest, uuid:string):Promise<ResponseData> => {
+    try {
+        const response = await fetch(`http://localhost:8080/posts/${uuid}`, {
+            body: JSON.stringify(request),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'DELETE'
+        })
+        console.log(response.status)
+        if(response.status === 200) {
+            return {
+                code: "OK",
+                message: 'success'
+            }
+        }
+        return await response.json();
+
+    } catch(error) {
+        console.error(error)
         return {
-            code: 200,
-            message: 'success'
+            code: "NG",
+            message: "error"
         }
     }
-    console.error()
-    return (await responseParser(response)).map((o:Map<string, string>) => ModelErrorFromJSON(o))
 }

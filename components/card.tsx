@@ -127,13 +127,27 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                             <form className={styles.flex}
                                 onSubmit={(e)=>{
                                     e.preventDefault();
+                                    if(post.writeDay == null) {
+                                        return;
+                                    }
                                     const uuid = post.uuid;
+                                    const writeDay = new Date(Date.parse(post.writeDay))
+
                                     const request = {
                                         deleteKey: deleteKey,
                                         gameId: post.gameId,
-                                        writeDay: post.writeDay
+                                        writeDay: writeDay.toISOString().split('T')[0]
                                     }
-                                    debugger;
+                                    const xhr = new XMLHttpRequest();
+                                    xhr.open('POST', `/api/posts/${uuid}`);
+                                    xhr.setRequestHeader("Content-Type", "application/json");
+                                    xhr.onload = () => {
+                                        console.log(xhr.status);
+                                    };
+                                    xhr.onerror = () => {
+                                        console.error(xhr.status);
+                                    };
+                                    xhr.send(JSON.stringify(request))
                                 }
                                 }>
                                 <div className={styles.form}>
