@@ -6,7 +6,7 @@ import Window, { SearchQuery } from '../components/window'
 import Card from '../components/card'
 import {getGames, findPosts} from '../lib/gen/api/forum'
 import { Game } from '../lib/gen/models/Game'
-import { InferGetServerSidePropsType } from 'next'
+import { InferGetStaticPropsType } from 'next'
 import { Post, PostPlayTimeEnum } from '../lib/gen/models/Post'
 import GameToPosts from '../lib/helper/GameToPosts'
 
@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 import { getGameName, playTimeIncludes } from '../lib/helper/genHelper'
 import { TagsIdEnum } from '../lib/gen/models/Tags'
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const games:Game[] = await getGames()
 
   const gameToPosts:GameToPosts[] = await games.reduce<Promise<Array<GameToPosts>>>(async (resultPromise, game:Game) => {
@@ -30,12 +30,14 @@ export const getServerSideProps = async () => {
   return {
     props: {
       games,
-      gameToPosts
+      gameToPosts,
+      updateTime: new Date().toISOString()
     },
+    revalidate: 60,
   }
 }
 
-export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home({ games, gameToPosts, updateTime }:InferGetStaticPropsType<typeof getStaticProps>) {
 
   const init = (gameToPosts:GameToPosts[]) => gameToPosts.flatMap((gameToPost) => {
     return gameToPost.posts.slice(0, 20)
@@ -99,10 +101,11 @@ export default function Home({ games, gameToPosts }:InferGetServerSidePropsType<
   return (  
     <div className={styles.container}>
       <Head>
-          <title>Create Next App</title> 
+          <title>Create Next App</title>
       </Head>
       <div className={styles.contents}>
         <Window games={games} search={search}/>
+        <div>{updateTime}</div>
         <main className={styles.main}>
           {viewPosts.map(post => (
               <Card key={post.uuid} gameName={getGameName(games, post.gameId)} post={post}/>
