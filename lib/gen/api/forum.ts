@@ -12,12 +12,12 @@ export type ResponseData = {
   }
 
 export async function getGames() {
-    const response: Response = await fetch('http://localhost:8080/games', {});
+    const response: Response = await fetch(`${process.env.API_BATH_PATH}/games?apikey=${process.env.API_KEY}`, {});
     return (await responseParser(response)).map((o:Map<string, string>) => GameFromJSON(o))
 }
 
 export async function findPosts(gameId: string) {
-    const response: Response = await fetch(`http://localhost:8080/games/${gameId}/posts`)
+    const response: Response = await fetch(`${process.env.API_BATH_PATH}/games/${gameId}/posts?apikey=${process.env.API_KEY}`)
     if(!response.ok) {
         return []
     }
@@ -37,7 +37,7 @@ export const savePost = async(query: PostQuery):Promise<ResponseData> => {
     }
     console.log(postData);
     try{
-        const response: Response = await fetch(`http://localhost:8080/games/${query.gameId}/posts`, {
+        const response: Response = await fetch(`${process.env.API_BATH_PATH}/games/${query.gameId}/posts?apikey=${process.env.API_KEY}`, {
             body: JSON.stringify(postData),
             headers: {
                 'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ export interface PostDeleteRequest {
 
 export const postDelete = async (request:PostDeleteRequest, uuid:string):Promise<ResponseData> => {
     try {
-        const response = await fetch(`http://localhost:8080/posts/${uuid}`, {
+        const response = await fetch(`${process.env.API_BATH_PATH}/posts/${uuid}?apikey=${process.env.API_KEY}`, {
             body: JSON.stringify(request),
             headers: {
                 'Content-Type': 'application/json'

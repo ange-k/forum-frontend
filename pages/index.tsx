@@ -31,7 +31,7 @@ export const getStaticProps = async () => {
     props: {
       games,
       gameToPosts,
-      updateTime: new Date().toISOString()
+      updateTime: new Date().toLocaleString()
     },
     revalidate: 60,
   }
@@ -105,8 +105,8 @@ export default function Home({ games, gameToPosts, updateTime }:InferGetStaticPr
       </Head>
       <div className={styles.contents}>
         <Window games={games} search={search}/>
-        <div>{updateTime}</div>
         <main className={styles.main}>
+          <div className={styles.buildtime}>更新日時:{updateTime}</div>
           {viewPosts.map(post => (
               <Card key={post.uuid} gameName={getGameName(games, post.gameId)} post={post}/>
           ))}
