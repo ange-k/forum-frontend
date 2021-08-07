@@ -10,8 +10,10 @@ import SelectTags from './selectTags';
 import SelectPlayTime from './selectPlayTimes';
 import Footer from './footer';
 
-import { ActivityIndicator, Button } from 'antd-mobile';
+import { ActivityIndicator, Button, List } from 'antd-mobile';
 import 'antd-mobile/dist/antd-mobile.css';
+const Item = List.Item;
+const Brief = Item.Brief;
 
 type postProps = ({
     games: Game[],
@@ -34,6 +36,11 @@ export interface PostQuery {
         ipAddr: string,
         userAgent: string
     }
+}
+interface LocalSaveData {
+    data: PostQuery,
+    title: string,
+    createdAt: number
 }
 
 const PostPage:React.FC<postProps> = ({games}) => {
@@ -61,15 +68,67 @@ const PostPage:React.FC<postProps> = ({games}) => {
     }
 
     const [status, setStatus] = useState({
-        message: '',
+        message: 'ボタンを押すと上記の内容で書き込みます。',
         state: POST_STATE.INITIAL,
     });
 
+    const LOCAL_KEY = 'local_object';
+    const [loadPostData, setLoadPostData] = useState({
+        enable: false,
+        data: [] as LocalSaveData[],
+    });
+    const pushLocalStorage = (body: PostQuery) => {
+        let data = loadPostData.data.sort(
+            (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        if(loadPostData.data.length > 4) {
+            // 5件を超えている場合は一番古いものを削除する
+            data.pop();
+        }
+        data.push({
+            data: body,
+            title: body.title,
+            createdAt: new Date().getTime()
+        });
+        localStorage.setItem(LOCAL_KEY, JSON.stringify(data));
+    }
+    const getReadLocalStorage = () => {
+        return (
+            <List className={styles.storageForm}>
+                <Item multipleLine onClick={() => {}}>
+                    投稿履歴のロード(最新5件まで) 
+                    <Brief>以下をクリックすると、<br/>履歴の内容を現在の内容に上書きします。</Brief>
+                </Item>
+                {
+                    loadPostData.data.sort((a,b)=> b.createdAt - a.createdAt).map((value: LocalSaveData) => {
+                        return (
+                            <Item key={value.createdAt} wrap={true}>
+                                {`${new Date(value.createdAt).toLocaleString()}`}
+                                <Brief>{`${value.title}`}</Brief>
+                                <Button type="primary" size="small" onClick={(e)=>{
+                                    console.log(value.data)
+                                    setQuery(Object.assign({}, value.data));
+                                }}>ロード</Button>
+                            </Item>
+                        )
+                    })
+                }
+            </List>
+        )
+    }
+
     const postApi = (query: PostQuery) => {
+        if(status.state === POST_STATE.EXECUTE) {
+            return;
+        }        
+        if(status.state === POST_STATE.SUCCESS) {
+            setStatus({...status, message: '複数回投稿することはできません'})
+            return;
+        }
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/api/post');
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onloadstart = () => {
+            pushLocalStorage(query);
             setStatus({
                 message: '送信中です。',
                 state: POST_STATE.EXECUTE 
@@ -132,6 +191,14 @@ const PostPage:React.FC<postProps> = ({games}) => {
     const [isTooltipVisible, setTooltipVisibility] = useState(false);
     React.useEffect(() => {
         setTooltipVisibility(true);
+        // localstorage check
+        if(localStorage) {
+            const items = localStorage.getItem(LOCAL_KEY);
+            setLoadPostData({
+                enable: true,
+                data: items != null ? JSON.parse(items) as LocalSaveData[] : []
+            });
+        }
       }, []);
 
     const validateCheck = (value:string, require: boolean, maxlen: number) => {
@@ -200,6 +267,14 @@ const PostPage:React.FC<postProps> = ({games}) => {
         )
     }
 
+    const [miniFormVisible, setMiniFormVisible] = useState(false);
+    const setVisibleClass = ((className: string) => {
+        if(miniFormVisible) {
+            return `${className} ${styles.visible}`;
+        }
+        return className;
+    })
+
     return (
         <div className={styles.container}>
             <div>
@@ -210,6 +285,18 @@ const PostPage:React.FC<postProps> = ({games}) => {
                                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
                             </span>
                         </button>
+                        <div>
+                            <button className={styles.icon} onClick={ (e)=> setMiniFormVisible(!miniFormVisible) }>
+                                <span className={styles.preicon}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM6 6h9v4H6z"/></svg>
+                                </span>
+                            </button>
+                            <div className={setVisibleClass(styles.miniform)}>
+                                <div className={styles.flex}>
+                                    {getReadLocalStorage()}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -221,7 +308,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                 </div>
                 <div className={styles.selectbox}>
                     <label className={styles.label}>ゲーム</label>
-                    <select onChange={(e)=> setQuery({...query, gameId: e.target.value})}>
+                    <select value={query.gameId} onChange={(e)=> setQuery({...query, gameId: e.target.value})}>
                         {
                             games.map((game) => (
                                 <option key={game.idName} value={game.idName}>{game.viewName}</option>
@@ -231,7 +318,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                 </div>
                 <div className={styles.selectbox}>
                     <label className={styles.label}>募集の目的</label>
-                    <select onChange={(e)=> setQuery({...query, purpose: e.target.value})}>
+                    <select value={query.purpose} onChange={(e)=> setQuery({...query, purpose: e.target.value})}>
                         {
                             proposes().map((p) => (
                                 <option key={p.key} value={p.key}>{p.value}</option>
@@ -241,7 +328,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                 </div>
                 <div className={styles.selectbox}>
                     <label className={styles.label}>ボイスチャット</label>
-                    <select onChange={(e) => setQuery({...query, vcUse: e.target.value})}>
+                    <select value={query.vcUse} onChange={(e) => setQuery({...query, vcUse: e.target.value})}>
                         {
                             vcuses().map((v) => (
                                 <option key={v.key} value={v.key}>{v.value}</option>
@@ -280,6 +367,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         <label>タイトル</label>
                     </span>
                     <input 
+                    value={query.title}
                     placeholder="この投稿のタイトルを記載"
                     maxLength={30} onChange={(e)=>setQuery({...query, title: e.target.value})}></input>
                 </div>
@@ -289,6 +377,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         <label>サーバ</label>
                     </span>
                     <input 
+                    value={query.server}
                     placeholder="例:Asia/Ship2/Gaia"
                     maxLength={15} onChange={(e)=>setQuery({...query, server: e.target.value})}></input>
                 </div>
@@ -298,6 +387,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         <label>名前</label>
                     </span>
                     <input 
+                    value={query.playerName}
                     placeholder="ニックネーム等"
                     maxLength={15} onChange={(e)=>setQuery({...query, playerName: e.target.value})}></input>
                 </div>
@@ -307,6 +397,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         <label>環境</label>
                     </span>
                     <input 
+                    value={query.device}
                     placeholder="例:PC,PS4,PS5,スマホ"
                     maxLength={15} onChange={(e)=>setQuery({...query, device: e.target.value})}></input>
                 </div>
@@ -316,6 +407,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         <label>削除キー</label>
                     </span>
                     <input 
+                    value={query.deleteKey}
                     placeholder="投稿を後で消す際に使用"
                     maxLength={15} onChange={(e)=>setQuery({...query, deleteKey: e.target.value})}></input>
                 </div>
@@ -326,6 +418,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         <label>本文({query.comment.length}/600)</label>
                     </span>
                     <textarea
+                        value={query.comment}
                         maxLength={600}
                         placeholder="本文を記入してください。このサービスに連絡を取る方法はございません。必ず連絡手段を記入しましょう。住所、性別など、個人情報の記載はお避けください。&#13;削除キーを入力しなかった場合は削除することができなくなりますので注意してください。&#13;※投稿データは1ヶ月程度で自動削除されます。" 
                         onChange={(e) => setQuery({...query, comment: e.target.value})}>

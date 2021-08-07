@@ -1,6 +1,6 @@
 @import "./Input.module.scss";
 @import "./Sidebar.module.scss";
-
+$white-line: rgb(217,217,217);
 .container {
     display: flex;
     flex-direction: row;
@@ -65,36 +65,44 @@
     align-items: center;
 }
 
-.postbtn {
-    background-color: #44b400;
-    color: #fff;
-    padding: 2px 4px;
-    border-radius: 16px;
-}
-.postbtn.disabled {
-    background-color: #225200;
-    color: $gray;
-}
-
-.btnbase {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 24px;
-    width: 96px;
-    overflow-wrap: unset;
-}
-
-.btnbase span {
-    padding-left: 2px;
-}
-
 .description {
     margin: 0.5rem 0.25rem;
 }
 
 .indicator {
     padding: 1rem;
+}
+
+
+.miniform {
+    position: fixed;
+    color: $white-line;
+    font-size: 0.8rem;
+
+    display: none;
+}
+.miniform.visible {
+    display: flex;
+    z-index: 20;
+    justify-content: center;
+    align-items: center;
+}
+
+.miniform .flex {
+    position: absolute;
+    z-index: 20;
+    bottom: 1rem;
+    left: 4rem;
+    top: 2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.storageForm {
+    max-width: 320px;
 }
 
 // overwrite

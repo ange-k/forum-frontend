@@ -146,6 +146,13 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                                         if(post.writeDay == null) {
                                             return;
                                         }
+                                        if(status.state === POST_STATE.EXECUTE) {
+                                            return;
+                                        }
+                                        if(status.state === POST_STATE.SUCCESS) {
+                                            setStatus({...status, message: '削除は成功しています'})
+                                            return;
+                                        }
                                         const uuid = post.uuid;
                                         const writeDay = new Date(Date.parse(post.writeDay))
 

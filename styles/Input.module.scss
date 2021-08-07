@@ -8,7 +8,6 @@ $input: 17px;
 @mixin base() {
     display: flex;
     flex-direction: column;
-    position: relative;
 
     align-items: stretch;
     background-color: $bgc;
@@ -19,6 +18,8 @@ $input: 17px;
 }
 @mixin label-base() {
     position: absolute;
+    z-index: 2;
+
     padding: 0 8px;
     display: inline;
     margin: 0;
