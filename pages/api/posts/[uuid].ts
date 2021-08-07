@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { postDelete, PostDeleteRequest, ResponseData } from '../../../lib/gen/api/forum';
+import { postDelete, ResponseData } from '../../../lib/gen/api/forum';
 
 export default function handler(
     req: NextApiRequest,
@@ -19,11 +19,16 @@ export default function handler(
       console.log("delete:" )
       console.log(req.body);
       postDelete(req.body, uuid as string).then((response) => {
-        console.log(response);
-        res.status(200)
+        if(response.code !== "OK") {
+          console.log(response.message);
+          res.status(500);
+        }
+        else {
+          res.status(200)
+        }
       }).catch((e) => {
         res.status(500);
-        console.error(e);
+        console.error("削除処理に失敗:" + e);
       }).finally(() => {
         res.end()
       })

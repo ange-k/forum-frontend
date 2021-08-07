@@ -9,6 +9,6 @@ module.exports = {
     optimizeFonts: true,
   },
   plugins: [
-    require("autoprefixer")
+    require("autoprefixer"),
   ]
 }

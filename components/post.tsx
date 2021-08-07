@@ -10,6 +10,9 @@ import SelectTags from './selectTags';
 import SelectPlayTime from './selectPlayTimes';
 import Footer from './footer';
 
+import { ActivityIndicator, Button } from 'antd-mobile';
+import 'antd-mobile/dist/antd-mobile.css';
+
 type postProps = ({
     games: Game[],
 })
@@ -50,14 +53,42 @@ const PostPage:React.FC<postProps> = ({games}) => {
         deleteKey: ''
     } as PostQuery)
 
+    enum POST_STATE {
+        INITIAL = 'INITIAL',    // 表示時
+        EXECUTE = 'EXECUTE',    // POST実行時
+        SUCCESS = 'SUCCESS',    // POST成功
+        FAIL = 'FAIL',          // エラー
+    }
+
+    const [status, setStatus] = useState({
+        message: '',
+        state: POST_STATE.INITIAL,
+    });
+
     const postApi = (query: PostQuery) => {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/api/post');
         xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onloadstart = () => {
+            setStatus({
+                message: '送信中です。',
+                state: POST_STATE.EXECUTE 
+            })
+        };
         xhr.onload = () => {
+            setTimeout(()=>{
+                setStatus({
+                    message: '送信成功しました。最長5分以内に反映されます。',
+                    state: POST_STATE.SUCCESS 
+                })
+            }, 2000)
             console.log(xhr.status);
         };
         xhr.onerror = () => {
+            setStatus({
+                message: '何らかのエラーが発生しました。しばらくおいて実行してください。',
+                state: POST_STATE.FAIL 
+            })
             console.error(xhr.status);
         };
         xhr.send(JSON.stringify(query))
@@ -143,26 +174,28 @@ const PostPage:React.FC<postProps> = ({games}) => {
     const sendBtn = () => {
         if(queryValidation(query)) {
             return (
-                <div className={styles.postbtn}>
-                    <button className={styles.btnbase} onClick={(e) => {
-                        e.preventDefault();
-                        if(queryValidation(query)) {
-                            postApi(query);
-                        }
-                    }}>
-                        <span>投稿</span>
-                    </button>
+                <div className={styles.subbtnarea}>
+                    <div>{status.message}</div>
+                    {status.state == POST_STATE.EXECUTE &&
+                        <div className={styles.indicator}>
+                            <ActivityIndicator />
+                        </div>
+                    }
+                    <div>
+                        <Button type="primary" inline size="small" onClick={(e) => {
+                            e.preventDefault();
+                            if(queryValidation(query)) {
+                                postApi(query);
+                            }
+                        }}>投稿</Button>
+                    </div>
                 </div>
             )
         }
         return (
             <div className={styles.subbtnarea}>
                 <div>入力項目のエラーを確認してください。</div>
-                <div className={styles.postbtn + " " + styles.disabled}>
-                    <button className={styles.btnbase} disabled={true}>
-                        <span>投稿</span>
-                    </button>
-                </div>
+                <Button type="primary" inline size="small" disabled>投稿</Button>
             </div>
         )
     }
@@ -289,11 +322,11 @@ const PostPage:React.FC<postProps> = ({games}) => {
                 
                 <div className={styles.textarea}>
                     <span className={styles.titlebox + ' ' + styles.label}>
-                        {validateCheck(query.comment, true, 300)}
-                        <label>本文({query.comment.length}/300)</label>
+                        {validateCheck(query.comment, true, 600)}
+                        <label>本文({query.comment.length}/600)</label>
                     </span>
                     <textarea
-                        maxLength={300}
+                        maxLength={600}
                         placeholder="本文を記入してください。このサービスに連絡を取る方法はございません。必ず連絡手段を記入しましょう。住所、性別など、個人情報の記載はお避けください。&#13;削除キーを入力しなかった場合は削除することができなくなりますので注意してください。&#13;※投稿データは1ヶ月程度で自動削除されます。" 
                         onChange={(e) => setQuery({...query, comment: e.target.value})}>
                     </textarea>

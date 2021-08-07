@@ -3,6 +3,9 @@ import { Post } from '../lib/gen/models/Post';
 import { convertPlayTime, convertPropose, convertTags, convertVcUse } from '../lib/helper/genHelper';
 import styles from '../styles/Card.module.scss'
 
+import { ActivityIndicator, Button } from 'antd-mobile';
+import 'antd-mobile/dist/antd-mobile.css';
+
 type CardProps = ({
     gameName: string,
     post: Post
@@ -12,6 +15,18 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
     const [miniFormVisible, setMiniFormVisible] = useState(false);
 
     const [deleteKey, setDeleteKey] = useState("");
+
+    enum POST_STATE {
+        INITIAL = 'INITIAL',    // 表示時
+        EXECUTE = 'EXECUTE',    // POST実行時
+        SUCCESS = 'SUCCESS',    // POST成功
+        FAIL = 'FAIL',          // エラー
+    }
+
+    const [status, setStatus] = useState({
+        message: '削除キーを入力',
+        state: POST_STATE.INITIAL,
+    });
 
     const setVisibleClass = ((className: string) => {
         if(miniFormVisible) {
@@ -124,46 +139,78 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                     </div>
                     <div>
                         <div className={setVisibleClass(styles.miniform)}>
-                            <form className={styles.flex}
-                                onSubmit={(e)=>{
-                                    e.preventDefault();
-                                    if(post.writeDay == null) {
-                                        return;
-                                    }
-                                    const uuid = post.uuid;
-                                    const writeDay = new Date(Date.parse(post.writeDay))
+                            <div>
+                                <form className={styles.flex}
+                                    onSubmit={(e)=>{
+                                        e.preventDefault();
+                                        if(post.writeDay == null) {
+                                            return;
+                                        }
+                                        const uuid = post.uuid;
+                                        const writeDay = new Date(Date.parse(post.writeDay))
 
-                                    const request = {
-                                        deleteKey: deleteKey,
-                                        gameId: post.gameId,
-                                        writeDay: writeDay.toISOString().split('T')[0]
+                                        const request = {
+                                            deleteKey: deleteKey,
+                                            gameId: post.gameId,
+                                            writeDay: writeDay.toISOString().split('T')[0]
+                                        }
+                                        const xhr = new XMLHttpRequest();
+                                        xhr.open('POST', `/api/posts/${uuid}`);
+                                        xhr.setRequestHeader("Content-Type", "application/json");
+                                        xhr.onloadstart = () => {
+                                            setStatus({
+                                                message: '送信中です。',
+                                                state: POST_STATE.EXECUTE 
+                                            })
+                                        };
+                                        xhr.onload = () => {
+                                            setTimeout(()=>{
+                                                if(xhr.status == 200) {
+                                                    setStatus({
+                                                        message: '送信成功しました。最長5分以内に反映されます。',
+                                                        state: POST_STATE.SUCCESS 
+                                                    })
+                                                } else {
+                                                    setStatus({
+                                                        message: '削除キーが設定されていないか、入力が間違っています。',
+                                                        state: POST_STATE.FAIL
+                                                    })
+                                                }
+
+                                            }, 2000)
+                                            console.log(xhr.status);
+                                        };
+                                        xhr.onerror = () => {
+                                            setStatus({
+                                                message: '何らかのエラーが発生しました。しばらくおいて実行してください。',
+                                                state: POST_STATE.FAIL 
+                                            })
+                                            console.error(xhr.status);
+                                        };
+                                        xhr.send(JSON.stringify(request))
                                     }
-                                    const xhr = new XMLHttpRequest();
-                                    xhr.open('POST', `/api/posts/${uuid}`);
-                                    xhr.setRequestHeader("Content-Type", "application/json");
-                                    xhr.onload = () => {
-                                        console.log(xhr.status);
-                                    };
-                                    xhr.onerror = () => {
-                                        console.error(xhr.status);
-                                    };
-                                    xhr.send(JSON.stringify(request))
-                                }
-                                }>
-                                <div className={styles.form}>
-                                    <label>削除キー</label>
-                                    <input 
-                                        onChange={(e)=>{setDeleteKey(e.target.value)}}
-                                        maxLength={15}
-                                        placeholder="削除キーを入力">
-                                    </input>
-                                </div>
-                                <div className={styles.deletesend}>
-                                    <button className={styles.btnbase}>
-                                        <span>削除</span>
-                                    </button>
-                                </div>
-                            </form>
+                                    }>
+                                    <div className={styles.item}>
+                                        <div className={styles.form}>
+                                            <label>削除キー</label>
+                                            <input 
+                                                onChange={(e)=>{setDeleteKey(e.target.value)}}
+                                                maxLength={15}
+                                                placeholder="削除キーを入力">
+                                            </input>
+                                        </div>
+                                        <button>
+                                            <Button type="warning" size="small" style={{width:"80px"}}>削除</Button>
+                                        </button>
+                                    </div>
+                                    <div className={styles.deleteMsg}>
+                                        {status.state == POST_STATE.EXECUTE &&
+                                            <ActivityIndicator />
+                                        }
+                                        {status.message}
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                         <div className={styles.deletebtn}>
                             <button className={styles.icon} 
