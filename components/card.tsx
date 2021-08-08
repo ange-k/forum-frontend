@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image'
 import { Post } from '../lib/gen/models/Post';
 import { convertPlayTime, convertPropose, convertTags, convertVcUse } from '../lib/helper/genHelper';
 import styles from '../styles/Card.module.scss'
@@ -75,6 +76,20 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                         <label>環境</label>
                         <div>{post.device}</div>
                     </div>
+
+                    { post.imageData && post.imageData.length > 0 &&
+                        
+                        <div className={styles.item}>
+                            <label>アイコン</label>
+                            <Image
+                                className={styles.userIcon}
+                                src={`https://upload.chalkboard.me/${post.imageData}`}
+                                width='150px'
+                                height='150px'
+                                alt='icon'
+                            />
+                        </div>
+                    }
                 </div>
                 <div className={styles.otherinfo}>
                     <div className={styles.recruitInfo}>

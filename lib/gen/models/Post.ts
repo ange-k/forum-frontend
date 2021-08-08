@@ -130,6 +130,8 @@ export interface Post {
      * @memberof Post
      */
     playTime?: Array<PostPlayTimeEnum>;
+
+    imageData?: string;
 }
 
 /**
@@ -203,6 +205,7 @@ export function PostFromJSONTyped(json: any, ignoreDiscriminator: boolean): Post
         'tags': !exists(json, 'tags') ? undefined : ((json['tags'] as Array<any>).map(TagsFromJSON)),
         'selfTags': !exists(json, 'selfTags') ? undefined : ((json['selfTags'] as Array<any>).map(TagsFromJSON)),
         'playTime': !exists(json, 'playTime') ? undefined : json['playTime'],
+        'imageData': !exists(json, 'imageData') ? undefined : json['imageData'],
     };
 }
 

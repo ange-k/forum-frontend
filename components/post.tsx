@@ -142,11 +142,19 @@ const PostPage:React.FC<postProps> = ({games}) => {
             })
         };
         xhr.onload = () => {
+
             setTimeout(()=>{
-                setStatus({
-                    message: '送信成功しました。最長5分以内に反映されます。',
-                    state: POST_STATE.SUCCESS 
-                })
+                if(xhr.status == 200) {
+                    setStatus({
+                        message: '送信成功しました。最長5分以内に反映されます。',
+                        state: POST_STATE.SUCCESS 
+                    })
+                } else {
+                    setStatus({
+                        message: '何らかのエラーが発生しました。しばらくおいて実行してください。',
+                        state: POST_STATE.FAIL
+                    })
+                }
             }, 2000)
             console.log(xhr.status);
         };
@@ -480,7 +488,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                     minCropBoxHeight={150}
                     minCropBoxWidth={150}
                     cropBoxResizable={false}
-                    dragMode={"none"}
+                    dragMode={"move"}
                     />
                 }
                 <div className={styles.textarea}>

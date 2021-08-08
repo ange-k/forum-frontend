@@ -44,11 +44,16 @@ export const savePost = async(query: PostQuery):Promise<ResponseData> => {
             },
             method: 'POST'
         });
-        if(response.ok) {
+        if(response.status == 200) {
             return {
                 code: "OK",
                 message: 'success'
             }
+        } else {
+            return {
+                code: "NG",
+                message: "error"
+            }   
         }
         return await response.json();
     }catch (error) {
