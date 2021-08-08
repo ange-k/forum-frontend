@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import Image from 'next/image'
 import { Game } from '../lib/gen/models/Game';
 import { PostPurposeEnum, PostVcUseEnum } from '../lib/gen/models/Post';
 import { proposes, vcuses } from '../lib/helper/genHelper';
@@ -10,8 +11,12 @@ import SelectTags from './selectTags';
 import SelectPlayTime from './selectPlayTimes';
 import Footer from './footer';
 
-import { ActivityIndicator, Button, List } from 'antd-mobile';
+import { ActivityIndicator, Button, List, ImagePicker } from 'antd-mobile';
 import 'antd-mobile/dist/antd-mobile.css';
+
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
+
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -35,7 +40,8 @@ export interface PostQuery {
     userData?: {
         ipAddr: string,
         userAgent: string
-    }
+    },
+    imageData: string
 }
 interface LocalSaveData {
     data: PostQuery,
@@ -57,7 +63,8 @@ const PostPage:React.FC<postProps> = ({games}) => {
         tags: [],
         selfTags: [],
         playTime: [],
-        deleteKey: ''
+        deleteKey: '',
+        imageData: ''
     } as PostQuery)
 
     enum POST_STATE {
@@ -96,7 +103,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
             <List className={styles.storageForm}>
                 <Item multipleLine onClick={() => {}}>
                     投稿履歴のロード(最新5件まで) 
-                    <Brief>以下をクリックすると、<br/>履歴の内容を現在の内容に上書きします。</Brief>
+                    <Brief>以下をクリックすると、<br/>履歴の内容を現在の内容に上書きします。<br/>画像はロードされません。</Brief>
                 </Item>
                 {
                     loadPostData.data.sort((a,b)=> b.createdAt - a.createdAt).map((value: LocalSaveData) => {
@@ -106,7 +113,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                                 <Brief>{`${value.title}`}</Brief>
                                 <Button type="primary" size="small" onClick={(e)=>{
                                     console.log(value.data)
-                                    setQuery(Object.assign({}, value.data));
+                                    setQuery(value.data);
                                 }}>ロード</Button>
                             </Item>
                         )
@@ -128,7 +135,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
         xhr.open('POST', '/api/post');
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onloadstart = () => {
-            pushLocalStorage(query);
+            pushLocalStorage({...query, imageData: ''}); //画像は保存しない
             setStatus({
                 message: '送信中です。',
                 state: POST_STATE.EXECUTE 
@@ -275,6 +282,24 @@ const PostPage:React.FC<postProps> = ({games}) => {
         return className;
     })
 
+    const [imageState, setImageState] = useState({
+        files: [] as any[],
+        multiple: false,
+    })
+    const cropperRef = useRef<HTMLImageElement>(null);
+    const onCrop = () => {
+      const imageElement: any = cropperRef?.current;
+      const cropper: any = imageElement?.cropper;
+      const base64: string = cropper.getCroppedCanvas({
+          width:150,
+          height:150,
+          imageSmoothingQuality: "medium"
+      }).toDataURL();
+      setQuery((pre_query) => {
+          return {...pre_query, imageData: base64}
+      });
+    };
+  
     return (
         <div className={styles.container}>
             <div>
@@ -411,7 +436,53 @@ const PostPage:React.FC<postProps> = ({games}) => {
                     placeholder="投稿を後で消す際に使用"
                     maxLength={15} onChange={(e)=>setQuery({...query, deleteKey: e.target.value})}></input>
                 </div>
-                
+                <div className={styles.inputbox}>
+                    <span className={styles.label} style={{height:"18px"}}>
+                        <label>アイコン画像(縦横150pxまで縮小されます)</label>
+                    </span>
+                    <div className={styles.imageCrops}>
+                        <div className={styles.cropsItem}>
+                            <ImagePicker
+                                files={imageState.files != null ? imageState.files: []}
+                                selectable={imageState.files.length < 1}
+                                length={1}
+                                multiple={false}
+                                onChange={(files, type, index) =>{
+                                    console.log(files);
+                                    setImageState({...imageState, files: Object.assign([], files)})
+                                }}
+                            />
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 20 20" height="48px" viewBox="0 0 20 20" width="48px" fill="#FFFFFF"><g><rect fill="none" height="20" width="20"/></g><g><polygon points="9.21,15 12.43,15 16,10 12.43,5 9.21,5 12.79,10"/><polygon points="4.21,15 7.43,15 11,10 7.43,5 4.21,5 7.79,10"/></g></svg>
+                        <div className={styles.cropsItem}>
+                            {query.imageData != null && query.imageData.length > 0 &&
+                                <Image 
+                                    className={styles.iconImage}
+                                    src={query.imageData}
+                                    alt=""
+                                    height="150px"
+                                    width="150px"
+                                />
+                            }
+                        </div>
+                    </div>
+                </div>
+                {imageState.files && imageState.files.length > 0 &&
+                    <Cropper
+                    src={imageState.files[0].url }
+                    style={{ height: 400, width: "100%" }}
+                    aspectRatio={1}
+                    ready={onCrop}
+                    cropend={onCrop}
+                    ref={cropperRef}
+                    viewMode={1}
+                    enable={true}
+                    minCropBoxHeight={150}
+                    minCropBoxWidth={150}
+                    cropBoxResizable={false}
+                    dragMode={"none"}
+                    />
+                }
                 <div className={styles.textarea}>
                     <span className={styles.titlebox + ' ' + styles.label}>
                         {validateCheck(query.comment, true, 600)}

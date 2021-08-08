@@ -3,6 +3,9 @@ import { Game } from '../lib/gen/models/Game';
 import styles from '../styles/Window.module.scss'
 import SearchTab from './searchTab';
 
+import { Button } from 'antd-mobile';
+import 'antd-mobile/dist/antd-mobile.css';
+
 type WindowProps = ({
     games: Game[],
     search: (query: SearchQuery) => void
@@ -71,15 +74,14 @@ const Window:React.FC<WindowProps> = ({games, search}) => {
                             <div className={styles.svgtab}>
                                 <span>投稿を検索</span>
                             </div>
-                            <div className={styles.searchbtn}>
-                                <button className={styles.btnbase} onClick={(e) => {
-                                    e.preventDefault();
-                                    search(query);
-                                }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 19.59V8l-6-6H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c.45 0 .85-.15 1.19-.4l-4.43-4.43c-.8.52-1.74.83-2.76.83-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5c0 1.02-.31 1.96-.83 2.75L20 19.59zM9 13c0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3-3 1.34-3 3z"/></svg>
-                                    <span>検索</span>
-                                </button>
-                            </div>
+                            <Button type="primary" size="small" 
+                            icon={<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 19.59V8l-6-6H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c.45 0 .85-.15 1.19-.4l-4.43-4.43c-.8.52-1.74.83-2.76.83-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5c0 1.02-.31 1.96-.83 2.75L20 19.59zM9 13c0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3-3 1.34-3 3z"/></svg>}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                search(query);
+                            }}>
+                                検索
+                            </Button>
                         </li>
                         <div className={styles.control}>
                         </div>

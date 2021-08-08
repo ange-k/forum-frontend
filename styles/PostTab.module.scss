@@ -93,7 +93,7 @@ $white-line: rgb(217,217,217);
     z-index: 20;
     bottom: 1rem;
     left: 4rem;
-    top: 2rem;
+    top: 0;
 
     display: flex;
     justify-content: center;
@@ -103,6 +103,20 @@ $white-line: rgb(217,217,217);
 
 .storageForm {
     max-width: 320px;
+}
+
+.imageCrops {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.cropsItem {
+    height: 100px;
+    width: 100px;
+}
+
+.iconImage {
+    border-radius: 50%;
 }
 
 // overwrite

@@ -14,12 +14,12 @@
 .main {
   padding: 1rem 0;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   flex-grow: 1;
   flex-shrink: 1;
   width: 90%;
+  min-height: 100vh;
 }
 
 @media (max-width: 600px) {

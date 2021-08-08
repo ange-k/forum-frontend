@@ -49,6 +49,11 @@ const validate = ((body: PostQuery) => {
   if(body.selfTags && body.selfTags.length > 5) {
     return false;
   }
+
+  if(body.imageData && body.imageData.length > 150000) {
+    console.error("ファイルサイズ過大");
+    return false;
+  }
   return true;
 });
 
