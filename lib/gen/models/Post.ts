@@ -205,7 +205,7 @@ export function PostFromJSONTyped(json: any, ignoreDiscriminator: boolean): Post
         'tags': !exists(json, 'tags') ? undefined : ((json['tags'] as Array<any>).map(TagsFromJSON)),
         'selfTags': !exists(json, 'selfTags') ? undefined : ((json['selfTags'] as Array<any>).map(TagsFromJSON)),
         'playTime': !exists(json, 'playTime') ? undefined : json['playTime'],
-        'imageData': !exists(json, 'imageData') ? undefined : json['imageData'],
+        'imageData': !exists(json, 'imageData') ? '' : json['imageData'],
     };
 }
 
@@ -234,6 +234,7 @@ export function PostToJSON(value?: Post | null): any {
         'tags': value.tags === undefined ? undefined : ((value.tags as Array<any>).map(TagsToJSON)),
         'selfTags': value.selfTags === undefined ? undefined : ((value.selfTags as Array<any>).map(TagsToJSON)),
         'playTime': value.playTime,
+        'imageData': value.imageData == null ? '' : value.imageData
     };
 }
 
