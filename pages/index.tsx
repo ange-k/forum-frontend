@@ -8,11 +8,11 @@ import { Game } from '../lib/gen/models/Game'
 import { InferGetStaticPropsType } from 'next'
 import { Post, PostPlayTimeEnum } from '../lib/gen/models/Post'
 import GameToPosts from '../lib/helper/GameToPosts'
+import Footer from '../components/footer'
 
 import React, { useState } from 'react';
 import { getGameName, playTimeIncludes } from '../lib/helper/genHelper'
 import { TagsIdEnum } from '../lib/gen/models/Tags'
-import Footer from '../components/footer'
 
 export const getStaticProps = async () => {
   const games:Game[] = await getGames()

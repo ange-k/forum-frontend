@@ -5,11 +5,12 @@ import { PostPurposeEnum, PostVcUseEnum } from '../lib/gen/models/Post';
 import { proposes, vcuses } from '../lib/helper/genHelper';
 import styles from '../styles/PostTab.module.scss'
 
+import Footer from './footer'
+
 import ReactTooltip from 'react-tooltip'
 import React from 'react';
 import SelectTags from './selectTags';
 import SelectPlayTime from './selectPlayTimes';
-import Footer from './footer';
 
 import { ActivityIndicator, Button, List, ImagePicker } from 'antd-mobile';
 import 'antd-mobile/dist/antd-mobile.css';
@@ -112,8 +113,8 @@ const PostPage:React.FC<postProps> = ({games}) => {
                                 {`${new Date(value.createdAt).toLocaleString()}`}
                                 <Brief>{`${value.title}`}</Brief>
                                 <Button type="primary" size="small" onClick={(e)=>{
-                                    console.log(value.data)
                                     setQuery(value.data);
+                                    setMiniFormVisible(false);
                                 }}>ロード</Button>
                             </Item>
                         )
@@ -509,8 +510,7 @@ const PostPage:React.FC<postProps> = ({games}) => {
                         sendBtn()
                     }
                 </div>   
-            <Footer></Footer>
-
+                <Footer></Footer>
             </div>
         </div>
     )

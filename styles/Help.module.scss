@@ -1,0 +1,43 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+
+    flex-direction: column;
+}
+
+.container h2 {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    margin-bottom: 3rem;
+}
+
+.container h3 {
+    font-size: 1.1rem;
+    padding: 0.25rem;
+    padding-left: 0;
+}
+
+.container p {
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+}
+.subContainer {
+    margin-bottom: 1rem;
+}
+
+.subContainer a{
+    color: cadetblue;
+    cursor: pointer;
+}
+
+.subContainer ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+.subContainer li {
+    display: flex;
+    align-items: center;
+}
