@@ -31,7 +31,7 @@ export const getStaticProps = async () => {
     props: {
       games,
       gameToPosts,
-      updateTime: new Date().toLocaleString('Asia/Tokyo')
+      updateTime: new Date().toLocaleString('ja-JP', {timeZone: 'Asia/Tokyo'})
     },
     revalidate: 60,
   }

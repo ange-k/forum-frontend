@@ -25,7 +25,7 @@ const SearchTab:React.FC<SearchProps> = ({games, query, setQuery}) => {
         <div className={styles.window}>
             <div className={styles.selectbox}>
                 <label htmlFor="game">ゲーム</label>
-                <select name="game" onChange={(e)=> setQuery({...query, gameId: e.target.value})}>
+                <select value={query.gameId} name="game" onChange={(e)=> setQuery({...query, gameId: e.target.value})}>
                     {
                         games.sort((a,b) => {
                             if(a.idName<b.idName){
