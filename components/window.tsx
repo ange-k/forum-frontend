@@ -42,7 +42,7 @@ const Window:React.FC<WindowProps> = ({games, search}) => {
     }
 
     return (
-        <div>
+        <div style={{zIndex: 10}}>
             <div className={styles.sidebar}>
                 <div className={styles.fixed}>
                     <button className={styles.icon}
