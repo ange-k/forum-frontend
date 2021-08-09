@@ -68,8 +68,9 @@ export default function handler(
     res.end();
   } else {
     const userAgent = req.headers['user-agent'] ? req.headers['user-agent'] : ''
+    const ipAddr = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'] : '0.0.0.0'
     const body: PostQuery = {...req.body, userData: {
-      ipAddr: '0.0.0.0', // x-forwarded-forからとるようにする
+      ipAddr: ipAddr, 
       userAgent: userAgent
     }};
 

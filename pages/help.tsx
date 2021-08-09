@@ -38,7 +38,10 @@ export default function Help({data}:InferGetServerSidePropsType<typeof getStatic
                             height={"50px"}
                             alt=""
                         />
-                        投稿の検索を行うことができます。検索の条件を設定し、検索ウィンドウ上部のボタンで検索を実行します。
+                        <div>
+                            <p>投稿の検索を行うことができます。検索の条件を設定し、検索ウィンドウ上部のボタンで検索を実行します。</p>
+                            <p>検索条件はAND（かつ）で繋げられます。設定したすべての条件を満たす投稿を見つけようとします。</p>
+                        </div>
                     </li>
                     <li className={styles.item}>
                         <Image

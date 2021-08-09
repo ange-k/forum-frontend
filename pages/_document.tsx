@@ -11,7 +11,6 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta name="description" content="MMO/MO(FF14,PSO2,PSO2 NGS, 原神)などのゲームユーザに向けた、コミュニケーションサポートサイトです。一緒に遊びたい、チームを作りたい、など目的別に掲示板に書き込み、検索することができます。" />
-          <meta name="robots" content="noindex"/>
 
           <meta property="og:locale" content="ja_JP"/>
           <meta property="og:type" content="website"/>
@@ -23,11 +22,24 @@ class MyDocument extends Document {
           <meta property="og:image:width" content="1242"/>
           <meta property="og:image:height" content="630"/>
 
+          <link rel="canonical" href="https://gamershub.chalkboard.me"/>
           <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png"/>
           <link rel="icon" type="image/png" href="/icon-192x192.png"/>
           <link rel="preconnect" href="https://fonts.googleapis.com"/>
           <link rel="preconnect" href="https://fonts.gstatic.com"/>
           <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet"/>
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y74N0JQMX6"></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+  
+              gtag('config', 'G-Y74N0JQMX6');
+                  `,
+            }}
+          ></script>
         </Head>
         <body className="custom_class">
           <Main />

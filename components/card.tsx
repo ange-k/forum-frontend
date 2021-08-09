@@ -7,6 +7,9 @@ import styles from '../styles/Card.module.scss'
 import { ActivityIndicator, Button } from 'antd-mobile';
 import 'antd-mobile/dist/antd-mobile.css';
 
+import reactStringReplace from "react-string-replace";
+
+
 type CardProps = ({
     gameName: string,
     post: Post
@@ -42,6 +45,8 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
         }
         return <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fff"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
     }
+
+    const regExp = /(https?:\/\/\S+)/g;
 
     return (
         <div className={styles.container} id={post.uuid}>
@@ -146,7 +151,13 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                             {
                                 (post.comment.split('\n')).map((text,index) => {
                                     return (
-                                        <p key={index}>{text}</p>
+                                        <p key={index}>
+                                            {
+                                                reactStringReplace(text, regExp, (match, i) => (
+                                                    <a href={match} target={"_blank"} rel="noreferrer" className={styles.link}>{match}</a>
+                                                ))
+                                            }
+                                        </p>
                                     )
                                 }) 
                             }
