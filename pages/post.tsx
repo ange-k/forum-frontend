@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { InferGetServerSidePropsType } from "next"
 import { getGames } from "../lib/gen/api/forum"
 import { Game } from "../lib/gen/models/Game"
@@ -18,6 +19,11 @@ export const getStaticProps = async () => {
 export default function Post({ games }:InferGetServerSidePropsType<typeof getStaticProps>) {
 
     return (
-        <PostPage games={games}/>
+        <div>
+            <Head>
+                <title>GamersHub | 投稿</title>
+            </Head>
+            <PostPage games={games}/>
+        </div>
     )
 }

@@ -101,7 +101,7 @@ export default function Home({ games, gameToPosts, updateTime }:InferGetStaticPr
   return (  
     <div className={styles.container}>
       <Head>
-          <title>Create Next App</title>
+          <title>GamersHub | 投稿一覧</title>
       </Head>
       <div className={styles.contents}>
         <Window games={games} search={search}/>
