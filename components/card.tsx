@@ -154,7 +154,7 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                                         <p key={index}>
                                             {
                                                 reactStringReplace(text, regExp, (match, i) => (
-                                                    <a href={match} target={"_blank"} rel="noreferrer" className={styles.link}>{match}</a>
+                                                    <a href={match} target={"_blank"} rel="noreferrer" className={styles.link} key={i}>{match}</a>
                                                 ))
                                             }
                                         </p>
@@ -232,7 +232,7 @@ const Card:React.FC<CardProps> = ({gameName, post}) => {
                                                 placeholder="削除キーを入力">
                                             </input>
                                         </div>
-                                        <button>
+                                        <button aria-label="削除">
                                             <Button type="warning" size="small" style={{width:"80px"}}>削除</Button>
                                         </button>
                                     </div>

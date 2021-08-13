@@ -8,10 +8,10 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="ja">
         <Head>
           <meta name="description" content="MMO/MO(FF14,PSO2,PSO2 NGS, 原神)などのゲームユーザに向けた、コミュニケーションサポートサイトです。一緒に遊びたい、チームを作りたい、など目的別に掲示板に書き込み、検索することができます。" />
-
+          <meta name="robots" content="noindex,nofollow,noarchive" />
           <meta property="og:locale" content="ja_JP"/>
           <meta property="og:type" content="website"/>
           <meta property="og:title" content="GamersHub"/>
